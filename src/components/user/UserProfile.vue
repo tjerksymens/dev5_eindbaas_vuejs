@@ -10,9 +10,9 @@ import Logo from "../general/Logo.vue";
             <a href="/profile" class="header--button">Profile</a>
         </nav>
     </header>
-    <div>
+    <main>
         <h1>UserProfile</h1>
-    </div>
+    </main>
 </template>
 
 <style scoped>

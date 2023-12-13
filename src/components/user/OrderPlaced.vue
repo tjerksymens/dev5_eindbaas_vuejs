@@ -6,9 +6,9 @@ import Logo from "../general/Logo.vue";
     <header>
         <Logo />
     </header>
-    <div>
+    <main>
         <h1>OrderPlaced</h1>
-    </div>
+    </main>
 </template>
 
 <style scoped>

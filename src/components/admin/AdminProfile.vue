@@ -6,9 +6,9 @@ import Logo from "../general/Logo.vue";
     <header>
         <Logo />
     </header>
-    <div>
+    <main>
         <h1>AdminProfile</h1>
-    </div>
+    </main>
 </template>
 
 <style scoped>
