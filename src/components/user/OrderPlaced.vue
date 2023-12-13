@@ -3,7 +3,9 @@
 </script>
 
 <template>
-
+    <div>
+        <h1>OrderPlaced</h1>
+    </div>
 </template>
 
 <style scoped>
