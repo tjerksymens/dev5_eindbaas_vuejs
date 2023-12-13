@@ -1,11 +1,17 @@
 <script setup>
-
+import Logo from "../general/Logo.vue";
 </script>
 
 <template>
-    <div>
+    <header>
+        <Logo />
+        <nav>
+            <a href="/profile" class="header--button">Profile</a>
+        </nav>
+    </header>
+    <main>
         <h1>AdminHome</h1>
-    </div>
+    </main>
 </template>
 
 <style scoped>

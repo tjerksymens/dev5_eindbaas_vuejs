@@ -1,0 +1,46 @@
+:root {
+    --Primary-Font: 'Roboto', sans-serif;
+    --Secondary-Font: 'Montserrat', sans-serif;
+    --Black: #000;
+    --white: #fff;
+    --Primary: #69ff47;
+    --Secondary: #4769FF;
+    --Tertiary: #DD49FF;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 96%;
+    height: 90px;
+    padding: 0 2% 0 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: var(--Black);
+    font-family: var(--Primary-Font);
+}
+
+a:hover {
+    color: var(--Primary);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+
+.header--button {
+    font-size: 28px;
+    font-weight: 700;
+    text-transform: uppercase;
+}

@@ -1,11 +1,11 @@
 <script setup>
-
+import Logo from "../general/Logo.vue";
 </script>
 
 <template>
-    <div>
-        <h1>Login</h1>
-    </div>
+    <header>
+        <Logo />
+    </header>
 </template>
 
 <style scoped>

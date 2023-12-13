@@ -1,11 +1,18 @@
 <script setup>
-    console.log('UserHome.vue setup() called');
+    import Logo from "../general/Logo.vue";
 </script>
 
 <template>
-    <div>
+    <header>
+        <Logo />
+        <nav>
+            <a href="/create" class="header--button">Create</a>
+            <a href="/profile" class="header--button">Profile</a>
+        </nav>
+    </header>
+    <main>
         <h1>UserHome</h1>
-    </div>
+    </main>
 </template>
 
 <style scoped>
