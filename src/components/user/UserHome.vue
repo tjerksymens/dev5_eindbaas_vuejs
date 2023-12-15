@@ -6,30 +6,30 @@
     <header>
         <Logo />
         <nav>
-            <a href="/create" class="button--header">Create</a>
-            <a href="/profile" class="button--header">Profile</a>
+            <a href="/create" class="button__header">Create</a>
+            <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
-    <main class="home home__user">
-        <div class="main__content__home home__user__content">
-            <h1 class="home__user__title--1">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
-            <h1 class="home__user__title--2">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+    <main class="home home--user">
+        <div class="main__content home__user__content">
+            <h1 class="home--user__title--1">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title--2">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
             <a class="button__main" href="/create">Start here</a>
-            <h1 class="home__user__title--3">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
-            <h1 class="home__user__title--4">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title--3">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title--4">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
         </div>
     </main>
 </template>
 
 <style scoped>
-    .home__user {
+    .home--user {
         background-image: url("../../assets/Swear-Banner.jpg");
         background-size: cover;
         background-position: center;
         overflow-x: hidden;
     }
 
-    .home__user__content {
+    .home--user__content {
         height: calc(100% - 170px);
         padding: 40px 0;
         display: flex;
@@ -38,7 +38,7 @@
         align-items: center; 
     }
 
-    .home__user__content h1 {
+    .home--user__content h1 {
         color: #69ff47;
         width: 100%;
         text-transform: uppercase;
@@ -47,12 +47,12 @@
         opacity: 0; /* Initially set opacity to 0 */
     }
 
-    .home__user__title--1 {
+    .home--user__title--1 {
         animation: roll 15s linear infinite;
         animation-delay: 7s;
     }
 
-    .home__user__title--2 {
+    .home--user__title--2 {
         animation: roll 15s linear infinite;
     }
 

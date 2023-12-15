@@ -7,16 +7,16 @@ import Logo from "../general/Logo.vue";
 <template>
     <header>
         <Logo />
-        <nav class="nav--oneButton">
+        <nav class="nav--one-button">
             <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
     <main class="creator">
-        <div class="creator__shoeDisplay">
+        <div class="creator__shoe-display">
             <h1>ShoeCreator ThreeJS</h1>
             <p>De schoen 3D komt hier</p>
         </div>
-        <div class="creator__shoeOptions">
+        <div class="creator__shoe-options">
             <h1>ShoeCreator Color selector</h1>
             <p>De settings voor de schoen en het kleuren selecteren komt hier</p>
             <br>
