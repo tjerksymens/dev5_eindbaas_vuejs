@@ -116,6 +116,8 @@ p {
     height: calc(100vh - 90px);
 }
 
+/*HOME*/
+
 /*CREATOR*/
 .creator {
     display: grid;
@@ -138,10 +140,10 @@ p {
 
 /*ORDER*/
 .order__list {
-    overflow-y: scroll;
-    overflow-x: hidden;
     padding-right: 8px;
     padding-left: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .order {
@@ -193,6 +195,7 @@ p {
 .order__status {
     font-weight: 700;
     font-size: 24px;
+    width: 12%;
 }
 
 .order__status--received {
@@ -213,4 +216,29 @@ p {
 
 .order__status--arrived {
     color: var(--Contrast-Green);
+}
+
+.status__select--status1 {
+    background-color: var(--Secondary);
+    color: var(--white);
+}
+
+.status__select--status2 {
+    background-color: var(--Secondary);
+    color: var(--white);
+}
+
+.status__select--status3 {
+    background-color: var(--Tertiary);
+    color: var(--white);
+}
+
+.status__select--status4 {
+    background-color: var(--Tertiary);
+    color: var(--white);
+}
+
+.status__select--status5 {
+    background-color: var(--Contrast-Green);
+    color: var(--white);
 }

@@ -1,5 +1,20 @@
 <script setup>
     import Logo from "../general/Logo.vue";
+    import { onMounted } from "vue";
+
+    // Function to generate random delay between -10s and 10s to apply to each title (each h1 with the animation)
+    function getRandomDelay() {
+    return Math.floor(Math.random() * 21) - 10;
+    }
+
+    onMounted(() => {
+    // Apply random delay to each title (each h1 with the animation) after the component is mounted
+    const titles = document.querySelectorAll('.home--user__title');
+    titles.forEach((title) => {
+        title.style.animationDelay = `${getRandomDelay()}s`;
+        console.log(title.style.animationDelay);
+    });
+    });
 </script>
 
 <template>
@@ -11,12 +26,12 @@
         </nav>
     </header>
     <main class="home home--user">
-        <div class="main__content home__user__content">
-            <h1 class="home--user__title--1">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
-            <h1 class="home--user__title--2">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+        <div class="main__content home--user__content">
+            <h1 class="home--user__title">*Create your own pair of Swear*      *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title">*Create your own pair of Swear*      *Create your own pair of Swear*</h1>
             <a class="button__main" href="/create">Start here</a>
-            <h1 class="home--user__title--3">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
-            <h1 class="home--user__title--4">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title">*Create your own pair of Swear*      *Create your own pair of Swear*</h1>
+            <h1 class="home--user__title">*Create your own pair of Swear*      *Create your own pair of Swear*</h1>
         </div>
     </main>
 </template>
@@ -47,23 +62,8 @@
         opacity: 0; /* Initially set opacity to 0 */
     }
 
-    .home--user__title--1 {
+    .home--user__title {
         animation: roll 15s linear infinite;
-        animation-delay: 7s;
-    }
-
-    .home--user__title--2 {
-        animation: roll 15s linear infinite;
-    }
-
-    .home__user__title--3 {
-        animation: roll 15s linear infinite;
-        animation-delay: 4s;
-    }
-
-    .home__user__title--4 {
-        animation: roll 15s linear infinite;
-        animation-delay: 10s;
     }
 
     @keyframes roll {

@@ -60,7 +60,7 @@ watchEffect(() => {
             <div class="profile__orders--user">
                 <h2>Your Orders</h2>
                 <ul class="order__list order__list--user">
-                    <li class="order profile__order profile__order--user" v-for="order in sortedOrders" :key="order.orderId">
+                    <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
                         <a class="order__box" href="/order">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
@@ -82,10 +82,14 @@ watchEffect(() => {
 </template>
 
 <style scoped>
+.profile__name--user {
+    margin-top: 20px;
+}
+
 .profile__orders--user {
     width: 60%;
     margin-left: 6%;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .order__list--user {
