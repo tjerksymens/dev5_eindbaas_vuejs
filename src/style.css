@@ -12,21 +12,25 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: var(--white);
 }
 
 /*HEADER*/
 header {
-    width: 96%;
+    width: calc(100% - 4%);
     height: 90px;
     padding: 0 2% 0 2%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 a {
     text-decoration: none;
-    color: var(--Black);
+    color: var(--white);
     font-family: var(--Primary-Font);
 }
 
@@ -41,16 +45,31 @@ nav {
     width: 20%;
 }
 
-.header--button {
+/*BUTTON*/
+.button--header {
     font-size: 28px;
     font-weight: 700;
     text-transform: uppercase;
 }
 
+.button--main {
+    background-color: var(--Secondary);
+    padding: 16px 32px;
+    border-radius: calc(16px + 28.235px);
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.button--main:hover {
+    background-color: var(--Tertiary);
+    color: var(--white);
+}
+
 /*MAIN*/
 main {
     width: 96%;
-    height: calc(100vh - 90px);
+    height: 100vh;
     padding: 0 2% 0 2%;
     display: flex;
     justify-content: space-between;
@@ -63,4 +82,19 @@ h1 {
     color: var(--Black);
     margin: 0;
     margin-left: 16px;
+}
+
+/*HOME*/
+.home {
+    width: 96%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main--content {
+    margin-top: 90px;
+    width: 100%;
+    height: calc(100vh - 90px);
 }
