@@ -51,13 +51,13 @@ nav {
 }
 
 /*BUTTON*/
-.button--header {
+.button__header {
     font-size: 28px;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-.button--main {
+.button__main {
     background-color: var(--Secondary);
     padding: 16px 32px;
     border-radius: calc(16px + 28.235px);
@@ -66,7 +66,7 @@ nav {
     font-weight: 700;
 }
 
-.button--main:hover {
+.button__main:hover {
     background-color: var(--Tertiary);
     color: var(--white);
 }
@@ -99,7 +99,7 @@ p {
 }
 
 /*HOME*/
-.main--content--home {
+.main__content__home {
     margin-top: 90px;
     width: 100%;
     height: calc(100vh - 90px);
@@ -111,13 +111,13 @@ p {
     grid-template-columns: 3fr 1fr;
 }
 
-.creator--shoeDisplay {
+.creator__shoeDisplay {
     background-color: var(--Primary);
     height: calc(100vh - 90px);
     margin-top: 90px;
 }
 
-.creator--shoeOptions {
+.creator__shoeOptions {
     background-color: var(--Secondary);
     height: calc(100vh - 90px);
     margin-top: 90px;

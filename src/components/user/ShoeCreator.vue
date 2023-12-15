@@ -8,15 +8,15 @@ import Logo from "../general/Logo.vue";
     <header>
         <Logo />
         <nav class="nav--oneButton">
-            <a href="/profile" class="button--header">Profile</a>
+            <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
     <main class="creator">
-        <div class="creator--shoeDisplay">
+        <div class="creator__shoeDisplay">
             <h1>ShoeCreator ThreeJS</h1>
             <p>De schoen 3D komt hier</p>
         </div>
-        <div class="creator--shoeOptions">
+        <div class="creator__shoeOptions">
             <h1>ShoeCreator Color selector</h1>
             <p>De settings voor de schoen en het kleuren selecteren komt hier</p>
             <br>

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="logo--box">
+    <div class="logo__box">
         <a href="/"><div class="logo"></div></a>
     </div>
 </template>
@@ -19,7 +19,7 @@
     margin-left: 20px;
 }
 
-.logo--box {
+.logo__box {
     display: flex;
     justify-content: center;
     align-items: center;
