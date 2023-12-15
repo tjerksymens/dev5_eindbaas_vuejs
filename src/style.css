@@ -45,6 +45,11 @@ nav {
     width: 20%;
 }
 
+.nav--oneButton a {
+    position: absolute;
+    right: 2%;
+}
+
 /*BUTTON*/
 .button--header {
     font-size: 28px;
@@ -68,11 +73,11 @@ nav {
 
 /*MAIN*/
 main {
-    width: 96%;
+    width: 100%;
     height: 100vh;
-    padding: 0 2% 0 2%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 h1 {
@@ -84,17 +89,36 @@ h1 {
     margin-left: 16px;
 }
 
-/*HOME*/
-.home {
-    width: 96%;
-    height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+p {
+    font-family: var(--Secondary-Font);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--Black);
+    margin: 0;
+    margin-left: 20px;
 }
 
-.main--content {
+/*HOME*/
+.main--content--home {
     margin-top: 90px;
     width: 100%;
     height: calc(100vh - 90px);
+}
+
+/*CREATOR*/
+.creator {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.creator--shoeDisplay {
+    background-color: var(--Primary);
+    height: calc(100vh - 90px);
+    margin-top: 90px;
+}
+
+.creator--shoeOptions {
+    background-color: var(--Secondary);
+    height: calc(100vh - 90px);
+    margin-top: 90px;
 }

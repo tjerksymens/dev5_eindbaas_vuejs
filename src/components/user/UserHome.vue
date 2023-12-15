@@ -11,7 +11,7 @@
         </nav>
     </header>
     <main class="home home--user">
-        <div class="main--content home--user--content">
+        <div class="main--content--home home--user--content">
             <h1 class="home--user--title-1">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
             <h1 class="home--user--title-2">*Create your own pair of Swear*   *Create your own pair of Swear*</h1>
             <a class="button--main" href="/create">Start here</a>
@@ -54,7 +54,6 @@
 
     .home--user--title-2 {
         animation: roll 15s linear infinite;
-        animation-delay: 1s;
     }
 
     .home--user--title-3 {

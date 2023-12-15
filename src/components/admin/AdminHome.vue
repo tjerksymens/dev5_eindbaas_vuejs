@@ -5,7 +5,7 @@ import Logo from "../general/Logo.vue";
 <template>
     <header>
         <Logo />
-        <nav>
+        <nav class="nav--oneButton">
             <a href="/profile" class="button--header">Profile</a>
         </nav>
     </header>
