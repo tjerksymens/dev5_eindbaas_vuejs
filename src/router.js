@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from './components/general/Login.vue';
+import Signup from './components/general/Signup.vue';
 import AdminHome from './components/admin/AdminHome.vue';
 import UserHome from './components/user/UserHome.vue';
 import AdminOrder from './components/admin/AdminOrder.vue';
@@ -12,7 +13,7 @@ import OrderConfirmed from './components/user/OrderConfirmed.vue';
 
 //create a variable that holds a 0 or 1 for the admin role (admin = 1, user = 0)
 //this needs to change to a function that checks the user role in the future
-const isAdmin = 0;
+const isAdmin = 1;
 //lets get a variable that holds if the user is logged in or not (logged in = 1, not logged in = 0)
 //this needs to change to a function that checks the user login state in the future
 const isLoggedIn = 1;
@@ -20,7 +21,27 @@ const isLoggedIn = 1;
 const routes = [
     {
         path: '/login',
-        component: Login,
+        component: () => {
+          if (isLoggedIn) {
+            // If the user is logged in, move to home page
+            router.push('/');
+          } else {
+            // If the user is not logged in, return the login page
+            return Login;
+          }
+        },
+    },
+    {
+        path: '/signup',
+        component: () => {
+          if (isLoggedIn) {
+            // If the user is logged in, move to home page
+            router.push('/');
+          } else {
+            // If the user is not logged in, return the signup page
+            return Signup;
+          }
+        },
     },
     {
         path: '/',

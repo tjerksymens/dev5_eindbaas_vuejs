@@ -179,29 +179,4 @@
         width: 20%;
         min-width: 132px;
     }
-
-    .order__options select {
-        width: 100%;
-        height: 60px;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 10%;
-        text-align: start;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 16px;
-    }
-
-    .order__options button {
-        width: 100%;
-        height: 60px;
-        padding: 8px 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        background-color: #FF4769;
-        color: #fff;
-        cursor: pointer;
-        font-size: 16px;
-    }
 </style>

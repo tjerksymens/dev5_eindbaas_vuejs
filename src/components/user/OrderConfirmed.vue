@@ -19,10 +19,6 @@ const orders = ref([
         snapshot: "https://cdn-images.farfetch-contents.com/14/61/25/03/14612503_23499899_600.jpg"
     }
 ]);
-
-const adress = ref([ 
-    
-]);
 </script>
 
 <template>
