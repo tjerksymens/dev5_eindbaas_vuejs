@@ -253,6 +253,15 @@ p {
     font-weight: 700;
 }
 
+.order_adress__box {
+    width: 100%;
+    display: flex;
+}
+
+.order__adress__box p {
+    display: inline-block;
+}
+
 .order__status {
     font-weight: 700;
     font-size: 24px;

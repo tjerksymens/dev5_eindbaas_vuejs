@@ -11,8 +11,11 @@ const orders = ref([
     {
         orderId: 5002,
         shoeId: 1891,
-        status: 3,
-        adress: "22 Carnaby St, Carnaby, London W1F 7DB, United Kingdom",
+        adress: {
+            firstLine: "22 Carnaby St, Carnaby",
+            secondLine: "London W1F 7DB",
+            thirdLine: "United Kingdom"
+        },
         snapshot: "https://cdn-images.farfetch-contents.com/14/61/25/03/14612503_23499899_600.jpg"
     }
 ]);
@@ -47,7 +50,10 @@ const closePopup = () => {
                     <h2 class="customer">Order for: <span>{{ firstName }} {{ lastName }}</span></h2>
                     <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order.orderId }}</p>
                     <p class="order__shoe confirm__order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
-                    <p class="order__adress confirm__order__adress"><span>Adress:</span> {{ order.adress }}</p>
+                    <div class="order__adress__box">
+                        <p><span>Adress:</span><br><br><br></p>
+                        <p class="order__adress confirm__order__adress" >{{ order.adress.firstLine }} <br> {{ order.adress.secondLine }} <br> {{ order.adress.thirdLine }}</p>
+                    </div>
                     <p class="order__status order__status--setup confirm__order__status"><span>Status:</span> Order setup🚩</p>
                     <div class="order__payment">
                         <h2>Select your payment method</h2>
