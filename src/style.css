@@ -9,6 +9,7 @@
     --Tertiary: #DD49FF;
 
     --Contrast-Green: #23BD00;
+    --Contrast-Red: #FF4769;
 }
 
 body {
@@ -73,6 +74,26 @@ nav {
     color: var(--white);
 }
 
+.btn--positive {
+    background-color: var(--Contrast-Green);
+    color: var(--white);
+}
+
+.btn--positive:hover {
+    background-color: var(--Tertiary);
+    color: var(--white);
+}
+
+.btn--negative {
+    background-color: var(--Secondary);
+    color: var(--white);
+}
+
+.btn--negative:hover {
+    background-color: var(--Tertiary);
+    color: var(--white);
+}
+
 /*MAIN*/
 main {
     width: 100%;
@@ -94,6 +115,16 @@ h1 {
 h2 {
     font-family: var(--Secondary-Font);
     font-size: 32px;
+    font-weight: 700;
+    color: var(--Black);
+    margin: 0;
+    margin-left: 16px;
+
+}
+
+h3 {
+    font-family: var(--Secondary-Font);
+    font-size: 24px;
     font-weight: 700;
     color: var(--Black);
     margin: 0;
@@ -132,8 +163,13 @@ p {
 
 .creator__shoe-options {
     background-color: var(--Secondary);
-    height: calc(100vh - 90px);
+    height: calc(100vh - 110px);
     margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
 }
 
 /*PROFILE*/
@@ -151,6 +187,28 @@ p {
     height: 180px;
     list-style: none;
     margin-bottom: 8px;
+}
+
+.order__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.order__close {
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+    margin-top: 12px;
+    background-image: url('../src/assets/close-green.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.order__close--black {
+    background-image: url('../src/assets/close-black.svg');
 }
 
 .order__box {
@@ -179,6 +237,9 @@ p {
     height: 100%;
     border-radius: 6px;
     color: var(--white);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .order__data {
@@ -195,10 +256,15 @@ p {
 .order__status {
     font-weight: 700;
     font-size: 24px;
-    width: 12%;
+    width: 20%;
+    margin-left: 0;
 }
 
-.order__status--received {
+.order__status span {
+    color: var(--Black);
+}
+
+.order__status--accepted {
     color: var(--Secondary);
 }
 
@@ -215,6 +281,14 @@ p {
 }
 
 .order__status--arrived {
+    color: var(--Contrast-Green);
+}
+
+.order__status--canceled {
+    color: var(--Contrast-Red);
+}
+
+.order__status--setup {
     color: var(--Contrast-Green);
 }
 
@@ -241,4 +315,119 @@ p {
 .status__select--status5 {
     background-color: var(--Contrast-Green);
     color: var(--white);
+}
+
+.customer span {
+    color: var(--Secondary);
+}
+
+/*CONFIRM(ED)*/
+.confirm, .confirmed {
+    background-image: url("../src/assets/Swear-Back.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.confirm__content, .confirmed__content {
+    background-color: #FFF;
+    height: calc(100% - 140px);
+    width: 94%;
+    margin-left: 3%;
+    border-radius: 12px;
+}
+
+
+.confirm__title, .confirmed__title {
+    color: #69ff47;
+    margin-top: 8px;
+    margin-left: 24px;
+}
+
+.confirm__order, .confirmed__order {
+    width: calc(100% - 40px);
+    height: 80%;
+    display: flex;
+    align-items: center;
+    margin: 20px 20px;
+}
+
+.confirm__order__data, .confirmed__order__data {
+    margin-left: 10%;
+    width: calc(40% -40px);
+}
+
+.confirm__order__status, .confirmed__order__status {
+    margin-left: 20px;
+    width: 100%;
+}
+
+/*POPUPS*/
+.popup {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.open__popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup__background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.popup__content {
+    width: 36%;
+    height: 36%;
+    padding: 2%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    background-color: var(--Primary);
+    border-radius: 24px;
+}
+
+.popup__content h2 {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.popup__content p {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--white);
+    margin: 0;
+    margin-top: 24px;
+}
+
+.popup__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+    margin-top: 24px;
+    margin-left: 30%;
+}
+
+.popup__option {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 8px;
 }

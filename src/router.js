@@ -12,7 +12,7 @@ import OrderConfirmed from './components/user/OrderConfirmed.vue';
 
 //create a variable that holds a 0 or 1 for the admin role (admin = 1, user = 0)
 //this needs to change to a function that checks the user role in the future
-const isAdmin = 1;
+const isAdmin = 0;
 //lets get a variable that holds if the user is logged in or not (logged in = 1, not logged in = 0)
 //this needs to change to a function that checks the user login state in the future
 const isLoggedIn = 1;

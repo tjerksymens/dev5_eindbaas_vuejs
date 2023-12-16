@@ -89,19 +89,19 @@
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
                                 <p class="order__buyer"><span>Customer:</span> {{ firstName }} {{ lastName }}</p>
                             </div>
-                            <p v-if="order.status === 1" class="order__status order__status--received">Order Received✉️</p>
-                            <p v-else-if="order.status === 2" class="order__status order__status--production">In Production🏭</p>
-                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing Order🎁</p>
-                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order Send🚚</p>
-                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order Arrived✅</p>
+                            <p v-if="order.status === 1" class="order__status order__status--accepted">Order accepted✉️</p>
+                            <p v-else-if="order.status === 2" class="order__status order__status--production">In production🏭</p>
+                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing order🎁</p>
+                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order send🚚</p>
+                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order arrived✅</p>
                         </a>
                         <div class="order__options">
                             <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                                <option value="1" class="status__select__option status__select--status1">Order Received</option>
-                                <option value="2" class="status__select__option status__select--status2">In Production</option>
-                                <option value="3" class="status__select__option status__select--status3">Preparing Order</option>
-                                <option value="4" class="status__select__option status__select--status4">Order Send</option>
-                                <option value="5" class="status__select__option status__select--status5">Order Arrived</option>
+                                <option value="1" class="status__select__option status__select--status1">Order accepted</option>
+                                <option value="2" class="status__select__option status__select--status2">In production</option>
+                                <option value="3" class="status__select__option status__select--status3">Preparing order</option>
+                                <option value="4" class="status__select__option status__select--status4">Order send</option>
+                                <option value="5" class="status__select__option status__select--status5">Order arrived</option>
                             </select>
                             <button>Cancel Order</button>
                         </div>

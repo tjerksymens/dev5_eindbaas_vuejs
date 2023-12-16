@@ -49,9 +49,8 @@ watchEffect(() => {
 <template>
     <header>
         <Logo />
-        <nav>
+        <nav class="nav--one-button">
             <a href="/create" class="button__header">Create</a>
-            <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
     <main class="profile profile--user">
@@ -68,11 +67,11 @@ watchEffect(() => {
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
                                 <p class="order__buyer"><span>Customer:</span> {{ firstName }} {{ lastName }}</p>
                             </div>
-                            <p v-if="order.status === 1" class="order__status order__status--received">Order Received✉️</p>
-                            <p v-else-if="order.status === 2" class="order__status order__status--production">In Production🏭</p>
-                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing Order🎁</p>
-                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order Send🚚</p>
-                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order Arrived✅</p>
+                            <p v-if="order.status === 1" class="order__status order__status--accepted">Order accepted✉️</p>
+                            <p v-else-if="order.status === 2" class="order__status order__status--production">In production🏭</p>
+                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing order🎁</p>
+                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order send🚚</p>
+                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order arrived✅</p>
                         </a>
                     </li>
                 </ul>
