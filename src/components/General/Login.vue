@@ -22,7 +22,7 @@ const handleLogin = () => {
             if (data.status === "success") {
                 let token = data.data.token;
                 localStorage.setItem("token", token);
-                return window.location.href = "/UserHome";
+                return window.location.href = "/login";
             } else {
                 if (data.status === "error") {
                     return document.querySelector(".form__error").innerHTML = "The password or username is incorrect";
