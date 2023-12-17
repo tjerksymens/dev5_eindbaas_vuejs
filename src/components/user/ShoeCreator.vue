@@ -104,6 +104,7 @@ orderBtn.addEventListener('click', () => {
     const shoeName = 'Costum Shoe';
     const price = parseFloat(document.getElementById('price').innerText.replace(',', '.'));
     const selectedSize = document.getElementById('size').value;
+    
     // Send the order to the API
     sendOrderToApi(currentConfiguration, shoeName, price, selectedSize);
 });
@@ -132,30 +133,35 @@ function getCurrentColor(part) {
     // Convert the color to hex
     const hexColor = '#' + color.toString(16).padStart(6, '0');
     return hexColor;
-  }
+}
 
 function sendOrderToApi(configuration, shoeName, price, selectedSize) {
     // Perform an HTTP request (e.g., using fetch) to send the configuration to your Node.js API
-    fetch('https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        name: shoeName, 
-        configuration,
-        price,
-        size: selectedSize,}),
+    const token = localStorage.getItem('token');
+
+    fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${localStorage.getItem("token")}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ 
+            name: shoeName, 
+            configuration,
+            price,
+            size: selectedSize,}),
     })
-      .then((response) => response.json())
-      .then((data) => {
+    .then((response) => response.json())
+    .then((data) => {
         console.log('Order placed successfully:', data);
-      })
-      .catch((error) => {
+        window.location.href = "/confirm";
+    })
+    .catch((error) => {
         console.error('Error placing order:', error);
-      });
-}
+    });
+    }
 });
+
 
 //Wanneer je weggaat van de pagina moet de user een melding krijgen dat hij zijn schoen niet heeft opgeslagen
 const openPopup = () => {
@@ -167,7 +173,6 @@ const closePopup = () => {
     document.querySelector(".popup").classList.remove("open__popup");
 }
 </script>
-
 <template>
     <header>
         <Logo />
@@ -208,7 +213,9 @@ const closePopup = () => {
                 <option value="46">46</option>
             </select>
             </div>
-            <a class="creator__save" id="orderBtn" href="/confirm">Place Order</a>
+            <div class="order-section">
+                <button id="orderBtn">Place Order</button>
+            </div>
         </div>
     </main>
     <div class="popup close__popup">

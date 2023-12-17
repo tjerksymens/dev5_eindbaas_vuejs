@@ -438,6 +438,7 @@ p {
     padding: 10px 20px;
     border: none;
     display: block;
+    width: 100%;
 }
 
 #orderBtn:hover{
