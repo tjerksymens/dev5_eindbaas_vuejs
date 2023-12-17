@@ -11,71 +11,66 @@ import ShoeCreator from './components/user/ShoeCreator.vue';
 import OrderPlaced from './components/user/OrderPlaced.vue';
 import OrderConfirmed from './components/user/OrderConfirmed.vue';
 
-//create a variable that holds a 0 or 1 for the admin role (admin = 1, user = 0)
-//this needs to change to a function that checks the user role in the future
-const isAdmin = 0;
+// Function to check if the user is an admin
+async function checkAdmin() {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/check-admin/${localStorage.getItem("token")}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
 
-//check if the user is logged in or not
-let isLoggedIn;
+        const data = await response.json();
 
-if (localStorage.getItem("token")) {
-    console.log("user is logged in")
-    isLoggedIn = 1;
-} else {
-    isLoggedIn = 0;
+        if (data && data.data.admin === true) {
+            console.log('User is an admin');
+            return true;
+        } else {
+            console.log('User is not an admin');
+            return false;
+        }
+    } catch (error) {
+        console.error('Error fetching user information:', error);
+        return false;
+    }
 }
 
+// Check if the user is logged in
+const isLoggedIn = localStorage.getItem("token");
+
+// Check if the user is an admin
+const isAdmin = isLoggedIn ? await checkAdmin() : false;
+
+// Create the routes based on the user's status
 const routes = [
     {
         path: '/login',
-        component: () => {
-          if (isLoggedIn) {
-            // If the user is logged in, move to home page
-            router.push('/');
-          } else {
-            // If the user is not logged in, return the login page
-            return Login;
-          }
-        },
+        component: () => (isLoggedIn ? router.push('/') : Login),
     },
     {
         path: '/signup',
-        component: () => {
-          if (isLoggedIn) {
-            // If the user is logged in, move to home page
-            router.push('/');
-          } else {
-            // If the user is not logged in, return the signup page
-            return Signup;
-          }
-        },
+        component: () => (isLoggedIn ? router.push('/') : Signup),
     },
     {
         path: '/',
-        component: () => {
-          if (isLoggedIn) {
-            // If the user is logged in, check if the user is an admin
-            if (isAdmin) {
-                return AdminHome;
-                } else { 
-            // If the user is not an admin, return the user home page
-                return UserHome;
+        component: async () => {
+            if (isLoggedIn) {
+                if (isAdmin) {
+                    return await import('./components/admin/AdminHome.vue');
+                } else {
+                    return await import('./components/user/UserHome.vue');
                 }
-          } else {
-            // If the user is not logged in, return the login page
-            router.push('/login');
-          }
+            } else {
+                router.push('/login');
+            }
         },
     },
     {
         path: '/order',
         component: () => {
             if (isLoggedIn) {
-                if (isAdmin) {
-                    return AdminOrder;
-                } else { 
-                    return UserOrder;
-                }
+                return isAdmin ? AdminOrder : UserOrder;
             } else {
                 router.push('/login');
             }
@@ -85,11 +80,7 @@ const routes = [
         path: '/profile',
         component: () => {
             if (isLoggedIn) {
-                if (isAdmin) {
-                    return AdminProfile;
-                } else { 
-                    return UserProfile;
-                }
+                return isAdmin ? AdminProfile : UserProfile;
             } else {
                 router.push('/login');
             }
@@ -99,28 +90,17 @@ const routes = [
         path: '/create',
         component: () => {
             if (isLoggedIn) {
-                if (isAdmin) {
-                    router.push('/');
-                } else { 
-                    return ShoeCreator;
-                }
+                return isAdmin ? router.push('/') : ShoeCreator;
             } else {
                 router.push('/login');
             }
         },
     },
-    //prevent manual navigation to the confirm page (STILL NEEDS TO BE ADDED)
-    //mensen mogen hier niet uitkomen vanuit hun browser als ze er manueel naar browsen
-    //kunnen dit misschien op de pagina zelf doen met een if statement
     {
         path: '/confirm',
         component: () => {
             if (isLoggedIn) {
-                if (isAdmin) {
-                    router.push('/');
-                } else { 
-                    return OrderPlaced;
-                }
+                return isAdmin ? router.push('/') : OrderPlaced;
             } else {
                 router.push('/login');
             }
@@ -130,11 +110,7 @@ const routes = [
         path: '/confirmed',
         component: () => {
             if (isLoggedIn) {
-                if (isAdmin) {
-                    router.push('/');
-                } else { 
-                    return OrderConfirmed;
-                }
+                return isAdmin ? router.push('/') : OrderConfirmed;
             } else {
                 router.push('/login');
             }
@@ -146,5 +122,4 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-  
 export default router;

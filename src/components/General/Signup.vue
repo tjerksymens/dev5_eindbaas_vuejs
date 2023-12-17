@@ -2,6 +2,16 @@
 import Logo from "../general/Logo.vue";
 import { ref } from "vue";
 
+const user = ref({
+    username: "",
+    password: "",
+    first_name: "",
+    last_name: "",
+    adress: "",
+    city: "",
+    country: "",
+});
+
 const handleSignup = () => {
     const enteredUsername = document.querySelector('input[name="username"]').value;
     const enteredPassword = document.querySelector('input[name="password"]').value;
@@ -25,9 +35,6 @@ const handleSignup = () => {
         } //if the lastname isn't a string return error
         else if (!enteredLastname.match(/^[a-zA-Z\s]+$/)) {
             return document.querySelector(".form__error").innerHTML = "Please enter a valid last name";
-        }//if the username already exists in the database return error
-        else if (listOfUsernames.value.includes(enteredUsername)) {
-            return document.querySelector(".form__error").innerHTML = "This username already exists";
         } //if adress doesn't contain a string + number up to 10000 return error
         else if (!enteredStreet.match(/^[a-zA-Z\s]+[0-9]{1,4}$/)) {
             return document.querySelector(".form__error").innerHTML = "Please enter a valid adress";
