@@ -1,39 +1,71 @@
 <script setup>
     import Logo from "../general/Logo.vue";
-    import { ref, watchEffect } from "vue";
+    import { ref, watchEffect, onMounted } from "vue";
 
     //twee variabelen voor de naam van de admin
     //deze worden geupdate opgehaald uit de api
-    let firstName = "Ben";
-    let lastName = "Dover";
+    // Declare variables outside the fetch request
+    let firstName = "Capitan";
+    let lastName = "Admin";
 
-    const orders = ref([
-        {
-            orderId: 5002,
-            shoeId: 1891,
-            status: 3
-        },
-        {
-            orderId: 2005,
-            shoeId: 2345,
-            status: 5
-        },
-        {
-            orderId: 3569,
-            shoeId: 1234,
-            status: 2
-        },
-        {
-            orderId: 1001,
-            shoeId: 5678,
-            status: 1
-        },
-        {
-            orderId: 4003,
-            shoeId: 3456,
-            status: 4
+    // Fetch user data
+    onMounted(async () => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/${localStorage.getItem("token")}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data');
+            }
+
+            const responseData = await response.json();
+            
+            if (responseData.data && responseData.data.user) {
+                const user = responseData.data.user;
+                if (user.first_name && user.last_name) {
+                    firstName = user.first_name;
+                    lastName = user.last_name;
+                } else {
+                    console.error('Invalid user data:', user);
+                }
+            } else {
+                console.error('Invalid API response:', responseData);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
         }
-    ]);
+    });
+
+    const fetchOrders = async () => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch orders');
+            }
+
+            const data = await response.json();
+            console.log(data.data);
+            orders.value = data.data;
+            
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
+    };
+
+    onMounted(fetchOrders);
+    // Declare a reactive variable to store the orders
+    const orders = ref([]);
 
     // Create a computed property to return a sorted copy of the orders array
     //orders worden geordend op status value
@@ -42,7 +74,10 @@
 
     // Watch for changes in the original orders array and update the sortedOrders
     watchEffect(() => {
-    sortedOrders.value = [...orders.value].sort((a, b) => a.status - b.status);
+        console.log('Orders changed:', orders.value);
+        sortedOrders.value = orders.value.slice().sort((a, b) => {
+            return b.status - a.status;
+        });
     });
 
     function getStatusColor(status) {
@@ -85,9 +120,9 @@
                         <a class="order__box order__box--admin" href="/order">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
-                                <p class="order__id"><span>Order ID:</span> {{ order.orderId }}</p>
-                                <p class="order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
-                                <p class="order__buyer"><span>Customer:</span> {{ firstName }} {{ lastName }}</p>
+                                <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
+                                <p class="order__shoe"><span>Shoe ID:</span> {{ order.name }}</p>
+                                <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }} </p>
                             </div>
                             <p v-if="order.status === 1" class="order__status order__status--accepted">Order accepted✉️</p>
                             <p v-else-if="order.status === 2" class="order__status order__status--production">In production🏭</p>
