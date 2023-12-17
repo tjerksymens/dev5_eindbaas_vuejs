@@ -53,7 +53,7 @@ const handleSignup = () => {
             user.value.password = enteredPassword;
             user.value.first_name = enteredFirstname;
             user.value.last_name = enteredLastname;
-            user.value.adres = enteredStreet;
+            user.value.adress = enteredStreet;
             user.value.city = enteredCity;
             user.value.country = enteredCountry;
             console.log(user.value);
@@ -69,6 +69,8 @@ const handleSignup = () => {
                 .then((data) => {
                     console.log("Success:", data);
                     if (data.status === "success") {
+                        let token = data.data.token;
+                        localStorage.setItem("token", token);
                         return window.location.href = "/login";
                     } else {
                         if (data.status === "error") {

@@ -6,21 +6,38 @@ import { ref } from "vue";
 //updaten naar API of lokaal bijhouden?????
 let loggedin = 0;
 
-const user = ref({
-    username: "ben55",
-    password: "5555"
-});
-
 const handleLogin = () => {
   const enteredUsername = document.querySelector('input[name="username"]').value;
   const enteredPassword = document.querySelector('input[name="password"]').value;
 
-  if (enteredUsername === user.value.username && enteredPassword === user.value.password) {
-    return window.location.href = "/home";
-    loggedin = 1;
-  } else {
-    document.querySelector(".form__error").innerHTML = "The password or username is incorrect";
-  }
+  fetch("https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ 
+                    username: enteredUsername,
+                    password: enteredPassword
+                }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+            if (data.status === "success") {
+                let token = data.data.token;
+                localStorage.setItem("token", token);
+                return window.location.href = "/UserHome";
+            } else {
+                if (data.status === "error") {
+                    return document.querySelector(".form__error").innerHTML = "The password or username is incorrect";
+                } else {
+                    return document.querySelector(".form__error").innerHTML = "Something went wrong";
+                }
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 };
 </script>
 
