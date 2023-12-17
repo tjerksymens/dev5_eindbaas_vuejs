@@ -51,13 +51,36 @@ const handleSignup = () => {
         else {
             user.value.username = enteredUsername;
             user.value.password = enteredPassword;
-            user.value.firstname = enteredFirstname;
-            user.value.lastname = enteredLastname;
-            user.value.street = enteredStreet;
+            user.value.first_name = enteredFirstname;
+            user.value.last_name = enteredLastname;
+            user.value.adres = enteredStreet;
             user.value.city = enteredCity;
             user.value.country = enteredCountry;
             console.log(user.value);
             //upload to api
+            fetch("https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(user.value),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Success:", data);
+                    if (data.status === "success") {
+                        return window.location.href = "/login";
+                    } else {
+                        if (data.status === "error") {
+                            return document.querySelector(".form__error").innerHTML = "This username already exists";
+                        } else {
+                            return document.querySelector(".form__error").innerHTML = "Something went wrong";
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
             //return window.location.href = "/login";
         }
     } else {
