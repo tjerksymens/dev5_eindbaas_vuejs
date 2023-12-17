@@ -737,4 +737,6 @@ p {
     font-weight: 700;
     padding: 16px 32px;
     border-radius: 8px;
+    margin-left: -16px;
+    margin-right: 32px;
 }
