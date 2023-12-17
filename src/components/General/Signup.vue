@@ -2,16 +2,6 @@
 import Logo from "../general/Logo.vue";
 import { ref } from "vue";
 
-//variabele voor de login
-//updaten naar API of lokaal bijhouden?????
-
-const user = ref({
-    
-});
-
-//vullen met data uit de api
-const listOfUsernames = ref([]);
-
 const handleSignup = () => {
     const enteredUsername = document.querySelector('input[name="username"]').value;
     const enteredPassword = document.querySelector('input[name="password"]').value;

@@ -14,9 +14,16 @@ import OrderConfirmed from './components/user/OrderConfirmed.vue';
 //create a variable that holds a 0 or 1 for the admin role (admin = 1, user = 0)
 //this needs to change to a function that checks the user role in the future
 const isAdmin = 0;
-//lets get a variable that holds if the user is logged in or not (logged in = 1, not logged in = 0)
-//this needs to change to a function that checks the user login state in the future
-const isLoggedIn = 0;
+
+//check if the user is logged in or not
+let isLoggedIn;
+
+if (localStorage.getItem("token")) {
+    console.log("user is logged in")
+    isLoggedIn = 1;
+} else {
+    isLoggedIn = 0;
+}
 
 const routes = [
     {
