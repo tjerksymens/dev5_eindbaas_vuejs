@@ -80,25 +80,6 @@
         });
     });
 
-    function getStatusColor(status) {
-        switch (status) {
-            case 'Order Received':
-            return 'white';
-            case 'Order accepted':
-            return '#4769FF';
-            case 'In production':
-            return '#DD49FF';
-            case 'Preparing order':
-            return '#DD49FF';
-            case 'Order send':
-            return '#23BD00';
-            case 'Order arrived':
-            return '#23BD00';
-            default:
-            return 'white';
-        }
-    }
-
     const updateOrderStatus = async (order) => {
         try {
             const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${order._id}`, {
@@ -174,17 +155,11 @@
                                 <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.name }}</p>
                                 <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }} </p>
+                                <p><span>Order Status:</span> {{ order.status }}</p>
                             </div>
-                            <p><span>Order Status:</span> {{ order.status }}</p>
                         </a>
                         <div class="order__options">
-                            <select
-                                id="status__select"
-                                name="status select"
-                                v-model="order.status"
-                                :style="{ backgroundColor: getStatusColor(order.status) }"
-                                @change="updateOrderStatus(order)"
-                            >
+                            <select id="status__select" name="status select" v-model="order.status" @change="updateOrderStatus(order)">
                                 <option value="Order Received" class="status__select__option status__select--status0" :selected="order.status === 'Order Received'" >Order Received</option>
                                 <option value="Order accepted" class="status__select__option status__select--status1" :selected="order.status === 'Order accepted'" >Order accepted</option>
                                 <option value="In production" class="status__select__option status__select--status2" :selected="order.status === 'In production'" >In production</option>
@@ -253,7 +228,7 @@
         justify-content: space-between;
         align-items: center;
         margin: 16px 0;
-        padding: 0 2%;
+        padding-right: 2%;
     }
 
     .order__box--admin {

@@ -460,6 +460,8 @@ p {
     height: 180px;
     list-style: none;
     margin-bottom: 8px;
+    border: 2px solid var(--Primary);
+    border-radius: 16px;
 }
 
 .order__head {
@@ -490,9 +492,7 @@ p {
     height: calc(100% - 20px);
     padding: 10px 20px;
     border-radius: 8px;
-    border: 2px solid var(--Primary);
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -521,6 +521,7 @@ p {
     flex-direction: column;
     justify-content: space-between;
     height: 80%;
+    margin-right: 2%;
 }
 
 .order__data p span {
@@ -573,31 +574,6 @@ p {
 
 .order__status--setup {
     color: var(--Contrast-Green);
-}
-
-.status__select--status1 {
-    background-color: var(--Secondary);
-    color: var(--white);
-}
-
-.status__select--status2 {
-    background-color: var(--Secondary);
-    color: var(--white);
-}
-
-.status__select--status3 {
-    background-color: var(--Tertiary);
-    color: var(--white);
-}
-
-.status__select--status4 {
-    background-color: var(--Tertiary);
-    color: var(--white);
-}
-
-.status__select--status5 {
-    background-color: var(--Contrast-Green);
-    color: var(--white);
 }
 
 .customer span {
