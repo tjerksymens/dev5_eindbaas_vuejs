@@ -37,31 +37,32 @@ const handleReset =() => {
     if (newPassword === confirmPassword) {
         console.log("passwords match");
         fetch("https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/change-password", {
-                method: "POST",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({ 
                     username: user.value.data.user.username,
-                    password: currentPassword,
+                    oldPassword: currentPassword,
                     newPassword: newPassword
-                }), //tot hier zou da moeten werken, maar krijg errors terug (met die data werkt da in postman)
+                }), 
         })
         .then((response) => response.json())
         .then((data) => {
             console.log("Success:", data);
-            //nog niet getest maar moet token destroyen en terug gaan naar login, of misschien popup die de token destroyed, of positive error message
-            /*if (data.status === "success") {
+            document.querySelector(".form__error").innerHTML = data.message;
+            if (data.status === "success") {
                 localStorage.removeItem("token");
                 console.log("Token destroyed");
                 return window.location.href = "/login";
             } else {
                 if (data.status === "error") {
-                    return document.querySelector(".form__error").innerHTML = "The password or username is incorrect";
+                    return document.querySelector(".form__error").innerHTML = data.message;
                 } else {
                     return document.querySelector(".form__error").innerHTML = "Something went wrong";
                 }
-            }*/
+            }
         })
         .catch((error) => {
             console.error("Error:", error);
