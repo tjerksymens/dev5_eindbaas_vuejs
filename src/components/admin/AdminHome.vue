@@ -57,7 +57,7 @@
             const data = await response.json();
             console.log(data.data);
             orders.value = data.data;
-            
+
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -82,20 +82,47 @@
 
     function getStatusColor(status) {
         switch (status) {
-            case 1:
-            return '#4769FF'; // Change to the desired color for Order Received
-            case 2:
-            return '#DD49FF'; // Change to the desired color for In Production
-            case 3:
-            return '#DD49FF'; // Change to the desired color for Preparing Order
-            case 4:
-            return '#DD49FF'; // Change to the desired color for Order Send
-            case 5:
-            return '#23BD00'; // Change to the desired color for Order Arrived
+            case 'Order Received':
+            return 'white';
+            case 'Order accepted':
+            return '#4769FF';
+            case 'In production':
+            return '#DD49FF';
+            case 'Preparing order':
+            return '#DD49FF';
+            case 'Order send':
+            return '#23BD00';
+            case 'Order arrived':
+            return '#23BD00';
             default:
-            return 'white'; // Default color
+            return 'white';
         }
     }
+
+    const updateOrderStatus = async (order) => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${order._id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    status: order.status,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update order status');
+            }
+
+            const data = await response.json();
+            console.log(data.data);
+
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
+    };
 </script>
 
 <template>
@@ -124,19 +151,22 @@
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.name }}</p>
                                 <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }} </p>
                             </div>
-                            <p v-if="order.status === 1" class="order__status order__status--accepted">Order accepted✉️</p>
-                            <p v-else-if="order.status === 2" class="order__status order__status--production">In production🏭</p>
-                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing order🎁</p>
-                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order send🚚</p>
-                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order arrived✅</p>
+                            <p><span>Order Status:</span> {{ order.status }}</p>
                         </a>
                         <div class="order__options">
-                            <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                                <option value="1" class="status__select__option status__select--status1">Order accepted</option>
-                                <option value="2" class="status__select__option status__select--status2">In production</option>
-                                <option value="3" class="status__select__option status__select--status3">Preparing order</option>
-                                <option value="4" class="status__select__option status__select--status4">Order send</option>
-                                <option value="5" class="status__select__option status__select--status5">Order arrived</option>
+                            <select
+                                id="status__select"
+                                name="status select"
+                                v-model="order.status"
+                                :style="{ backgroundColor: getStatusColor(order.status) }"
+                                @change="updateOrderStatus(order)"
+                            >
+                                <option value="Order Received" class="status__select__option status__select--status0" :selected="order.status === 'Order Received'" >Order Received</option>
+                                <option value="Order accepted" class="status__select__option status__select--status1" :selected="order.status === 'Order accepted'" >Order accepted</option>
+                                <option value="In production" class="status__select__option status__select--status2" :selected="order.status === 'In production'" >In production</option>
+                                <option value="Preparing order" class="status__select__option status__select--status3" :selected="order.status === 'Preparing order'" >Preparing order</option>
+                                <option value="Order send" class="status__select__option status__select--status4" :selected="order.status === 'Order send'" >Order send</option>
+                                <option value="Order arrived" class="status__select__option status__select--status5" :selected="order.status === 'Order arrived'" >Order arrived</option>
                             </select>
                             <button>Cancel Order</button>
                         </div>
