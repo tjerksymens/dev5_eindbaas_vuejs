@@ -50,7 +50,7 @@ const handleReset =() => {
         .then((response) => response.json())
         .then((data) => {
             console.log("Success:", data);
-            //nog niet getest
+            //nog niet getest maar moet token destroyen en terug gaan naar login, of misschien popup die de token destroyed, of positive error message
             /*if (data.status === "success") {
                 localStorage.removeItem("token");
                 console.log("Token destroyed");
@@ -75,6 +75,9 @@ const handleReset =() => {
 <template>
     <header>
         <Logo />
+        <nav class="nav--one-button">
+            <a href="/" class="button__header">Home</a>
+        </nav>
     </header>
     <main class="admin__profile">
         <div class="admin__profile__content">

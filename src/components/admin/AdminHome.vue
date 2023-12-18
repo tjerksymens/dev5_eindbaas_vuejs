@@ -160,7 +160,7 @@
         <div class="main__content home__content--admin">
             <div class="home__orders--admin">
                 <div class="home__orders__head">
-                    <h2>Current Orders</h2>
+                    <h2>Current Orders:  <span>{{ sortedOrders.length }}</span></h2>
                     <div class="home__searchbar">
                         <input type="text" placeholder="Search..">
                         <button type="submit">Search</button>
