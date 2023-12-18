@@ -1,57 +1,53 @@
 <script setup>
-    import Logo from "../general/Logo.vue";
-    import { ref, watchEffect } from "vue";
+import Logo from "../general/Logo.vue";
+import { ref, onMounted } from "vue";
 
-    //twee variabelen voor de naam van de admin
-    //deze worden geupdate opgehaald uit de api
-    let firstName = "Ben";
-    let lastName = "Dover";
+async function getUser() {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/${localStorage.getItem("token")}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            }
+        });
 
-    const orders = ref([
-        {
-            orderId: 5002,
-            shoeId: 1891,
-            status: 3
-        },
-        {
-            orderId: 2005,
-            shoeId: 2345,
-            status: 5
-        },
-        {
-            orderId: 3569,
-            shoeId: 1234,
-            status: 2
-        },
-        {
-            orderId: 1001,
-            shoeId: 5678,
-            status: 1
-        },
-        {
-            orderId: 4003,
-            shoeId: 3456,
-            status: 4
-        }
-    ]);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching user information:', error);
+        return null;
+    }
+}
 
-    // Create a computed property to return a sorted copy of the orders array
-    //orders worden geordend op status value
-    //zo komen de nieuwste orders bovenaan te staan
-    const sortedOrders = ref([]);
+const user = ref(null);
 
-    // Watch for changes in the original orders array and update the sortedOrders
-    watchEffect(() => {
-    sortedOrders.value = [...orders.value].sort((a, b) => a.status - b.status);
-    });
+onMounted(async () => {
+    user.value = await getUser();
+    console.log(user.value?.data.user);
+});
 </script>
 
 <template>
     <header>
         <Logo />
     </header>
-    <main>
-        <h1>AdminProfile</h1>
+    <main class="admin__profile">
+        <div class="main__content admin__profile__content">
+            <div class="admin__profile__fill"></div>
+            <div class="admin__profile__content">
+                <h1>Hey there, {{ user.data.user.first_name }} {{ user.data.user.last_name }}</h1>
+                <div>
+                    <p><span>Work location: </span></p>
+                    <div>
+                        <p>{{ user.data.user.adress }},</p>
+                        <p>{{ user.data.user.city }},</p>
+                        <p>{{ user.data.user.country }}</p>
+                    </div>
+                </div>
+                
+                <p><span>Admin status: </span></p>
+            </div>
+        </div>
     </main>
 </template>
 
