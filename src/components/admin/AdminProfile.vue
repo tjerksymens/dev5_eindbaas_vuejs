@@ -26,10 +26,49 @@ onMounted(async () => {
 });
 
 const handleReset =() => {
-    const currentpassword = document.querySelector('input[name="old-password"]').value;
-    const newpassword = document.querySelector('input[name="new-password"]').value;
-    const confirmpassword = document.querySelector('input[name="confirm password"]').value;
-    console.log(currentpassword, newpassword, confirmpassword);
+    //al die parameters werken
+    const currentPassword = document.querySelector('input[name="old-password"]').value;
+    const newPassword = document.querySelector('input[name="new-password"]').value;
+    const confirmPassword = document.querySelector('input[name="confirm password"]').value;
+    const username = user.value.data.user.username;
+    console.log(username);
+
+    //check if th new password and confirm password are the same
+    if (newPassword === confirmPassword) {
+        console.log("passwords match");
+        fetch("https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/change-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ 
+                    username: user.value.data.user.username,
+                    password: currentPassword,
+                    newPassword: newPassword
+                }), //tot hier zou da moeten werken, maar krijg errors terug (met die data werkt da in postman)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+            //nog niet getest
+            /*if (data.status === "success") {
+                localStorage.removeItem("token");
+                console.log("Token destroyed");
+                return window.location.href = "/login";
+            } else {
+                if (data.status === "error") {
+                    return document.querySelector(".form__error").innerHTML = "The password or username is incorrect";
+                } else {
+                    return document.querySelector(".form__error").innerHTML = "Something went wrong";
+                }
+            }*/
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    } else {
+        return document.querySelector(".form__error").innerHTML = "The new passwords do not match";
+    }
 };
 </script>
 
@@ -75,6 +114,7 @@ const handleReset =() => {
                         </div>
                         <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
                     </div>
+                    <p class="form__error"></p>
                 </div>
             </div>
             <div v-else class="admin__profile__data">
@@ -110,6 +150,7 @@ const handleReset =() => {
                         </div>
                         <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
                     </div>
+                    <p class="form__error"></p>
                 </div>
             </div>
         </div>
