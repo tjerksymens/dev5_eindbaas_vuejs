@@ -1,49 +1,81 @@
 <script setup>
 import Logo from "../general/Logo.vue";
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, onMounted } from "vue";
 
-//twee variabelen voor de naam van de user
-//deze worden geupdate naar de api value via de login
-let firstName = "Joe";
-let lastName = "Jackson";
+//Deze pagina is WIP en wordt afgemaakt als cors terug werkt
 
-const orders = ref([
-    {
-        orderId: 5002,
-        shoeId: 1891,
-        status: 3
-    },
-    {
-        orderId: 2005,
-        shoeId: 2345,
-        status: 5
-    },
-    {
-        orderId: 3569,
-        shoeId: 1234,
-        status: 2
-    },
-    {
-        orderId: 1001,
-        shoeId: 5678,
-        status: 1
-    },
-    {
-        orderId: 4003,
-        shoeId: 3456,
-        status: 4
-    }
-]);
+// Fetch user data
+onMounted(async () => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/${localStorage.getItem("token")}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
 
-// Create a computed property to return a sorted copy of the orders array
-//orders worden geordend op status value
-//zo komen de nieuwste orders bovenaan te staan
-const sortedOrders = ref([]);
+            if (!response.ok) {
+                throw new Error('Failed to fetch user data');
+            }
 
-// Watch for changes in the original orders array and update the sortedOrders
-watchEffect(() => {
-  sortedOrders.value = [...orders.value].sort((a, b) => a.status - b.status);
-});
+            const responseData = await response.json();
+            
+            if (responseData.data && responseData.data.user) {
+                const user = responseData.data.user;
+                if (user.first_name && user.last_name) {
+                    firstName = user.first_name;
+                    lastName = user.last_name;
+                } else {
+                    console.error('Invalid user data:', user);
+                }
+            } else {
+                console.error('Invalid API response:', responseData);
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    });
+
+    const fetchOrdersByUser = async () => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch orders');
+            } //else return all orders where username = user.username
+            else {
+                const responseData = await response.json();
+                console.log(responseData.data);
+                const allOrders = responseData.data;
+                const userOrders = allOrders.filter(order => order.user.username === user.value.data.user.username);
+                console.log(userOrders);
+                orders.value = userOrders;
+            }
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
+    };
+
+    onMounted(fetchOrdersByUser);
+
+    // Create a computed property to return a sorted copy of the orders array
+    //orders worden geordend op status value
+    //zo komen de nieuwste orders bovenaan te staan
+    const sortedOrders = ref([]);
+
+    // Watch for changes in the original orders array and update the sortedOrders
+    watchEffect(() => {
+        console.log('Orders changed:', orders.value);
+        sortedOrders.value = orders.value.slice().sort((a, b) => {
+            return b.status - a.status;
+        });
+    });
 </script>
 
 <template>
@@ -59,19 +91,15 @@ watchEffect(() => {
             <div class="profile__orders--user">
                 <h2>Your Orders</h2>
                 <ul class="order__list order__list--user">
-                    <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
+                    <li class="order home__order home__order--user" v-for="order in orders.value" :key="order.orderId">
                         <a class="order__box" href="/order">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
                                 <p class="order__id"><span>Order ID:</span> {{ order.orderId }}</p>
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
                                 <p class="order__buyer"><span>Customer:</span> {{ firstName }} {{ lastName }}</p>
+                                <p><span>Order Status:</span> {{ order.status }}</p>
                             </div>
-                            <p v-if="order.status === 1" class="order__status order__status--accepted">Order accepted✉️</p>
-                            <p v-else-if="order.status === 2" class="order__status order__status--production">In production🏭</p>
-                            <p v-else-if="order.status === 3" class="order__status order__status--preparing">Preparing order🎁</p>
-                            <p v-else-if="order.status === 4" class="order__status order__status--delivering">Order send🚚</p>
-                            <p v-else-if="order.status === 5" class="order__status order__status--arrived">Order arrived✅</p>
                         </a>
                     </li>
                 </ul>
