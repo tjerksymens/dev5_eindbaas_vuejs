@@ -1,42 +1,85 @@
 <script setup>
 import Logo from "../general/Logo.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
-const orders = ref([
-    {
-        orderId: 5002,
-        shoeId: 1891,
-        firstName: "Joe",
-        lastName: "Jackson",
-        adress: {
-            firstLine: "22 Carnaby St, Carnaby",
-            secondLine: "London W1F 7DB",
-            thirdLine: "United Kingdom"
-        },
-        snapshot: "https://cdn-images.farfetch-contents.com/14/61/25/03/14612503_23499899_600.jpg",
-        status: 3
+const route = useRoute();
+const orderId = ref(route.params.orderId);
+const order = ref(null);
+
+
+onMounted(async () => {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch order details');
+        }
+
+        const data = await response.json();
+        order.value = data.data.shoe;
+
+        // Log order.value after setting its value
+        console.log(order.value);
+        
+    } catch (error) {
+        console.error('Error fetching order details:', error);
     }
-]);
+});
 
-function getStatusColor(status) {
-        switch (status) {
-        case 1:
-        return '#4769FF'; // Change to the desired color for Order Received
-        case 2:
-        return '#DD49FF'; // Change to the desired color for In Production
-        case 3:
-        return '#DD49FF'; // Change to the desired color for Preparing Order
-        case 4:
-        return '#DD49FF'; // Change to the desired color for Order Send
-        case 5:
-        return '#23BD00'; // Change to the desired color for Order Arrived
-        default:
-        return 'white'; // Default color
-    }
-}
+const updateOrderStatus = async (order) => {
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    status: order.status,
+                }),
+            });
 
-//alles werkt behalve het updaten van de status wanneer er een nieuwe wordt gekozen in de select
-//kan misschien opgelost worden door een watch effect te gebruiken of door LIVE api data
+            if (!response.ok) {
+                throw new Error('Failed to update order status');
+            }
+
+            const data = await response.json();
+            console.log(data.data);
+
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
+    };
+
+const cancelOrder = async (order) =>{
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to cancel order');
+            }
+
+            const data = await response.json();
+            console.log(data.data);
+            window.location.href = "/login";
+
+        } catch (error) {
+            console.error('Error canceling order:', error);
+        }
+    };
+
 </script>
 
 <template>
@@ -47,78 +90,47 @@ function getStatusColor(status) {
             <a href="/profile" class="button__header">Profile</a> 
         </nav>
     </header>
-    <main class="confirmed">
+    <div v-if="order">
+        <main class="confirmed">
         <div class="main__content confirmed__content">
             <div class="order__head">
                 <h1 class="confirmed__title">Order information</h1>
                 <a class="order__close" href="/"></a>
             </div>
-            <div class="confirmed__order" v-for="order in orders" :key="order.orderId">
-                <div class="order__snapshot confirmed__order__snapshot" :style="{ backgroundImage: 'url(' + order.snapshot + ')' }"></div>
+            <div class="confirmed__order">
+                <div class="order__snapshot confirmed__order__snapshot"></div>
                 <div class="order__data confirmed__order__data">
-                    <h2 class="customer">Order for <span>{{ order.firstName }} {{ order.lastName }}</span></h2>
-                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order.orderId }}</p>
-                    <p class="order__shoe confirm__order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
+                    <h2 class="customer">Order for <span> {{ order.user.first_name }} {{ order.user.last_name }}</span></h2>
+                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order._id }} </p>
                     <div class="order__adress__box">
-                        <p><span>Adress:</span><br><br><br></p>
-                        <p class="order__adress confirm__order__adress" >{{ order.adress.firstLine }} <br> {{ order.adress.secondLine }} <br> {{ order.adress.thirdLine }}</p>
+                        <p><span>Address:</span><br><br><br></p>
+                        <p class="order__address confirm__order__address">
+                            {{ order.user.adress }} <br>
+                            {{ order.user.city}} <br>
+                            {{ order.user.country }}
+                        </p>
                     </div>
-                    <div v-if="order.status === 1" class="order__options order__options__id">
-                        <p class="order__status order__status--accepted admin__order__status"><span>Status: </span>Order accepted✉️</p>
-                        <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                            <option value="1" class="status__select__option status__select--status1">Order accepted</option>
-                            <option value="2" class="status__select__option status__select--status2">In production</option>
-                            <option value="3" class="status__select__option status__select--status3">Preparing order</option>
-                            <option value="4" class="status__select__option status__select--status4">Order send</option>
-                            <option value="5" class="status__select__option status__select--status5">Order arrived</option>
-                        </select>
-                    </div>
-                    <div v-else-if="order.status === 2" class="order__options order__options__id">
-                        <p class="order__status order__status--production admin__order__status"><span>Status: </span>In production🏭</p>
-                        <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                            <option value="1" class="status__select__option status__select--status1">Order accepted</option>
-                            <option value="2" class="status__select__option status__select--status2">In production</option>
-                            <option value="3" class="status__select__option status__select--status3">Preparing order</option>
-                            <option value="4" class="status__select__option status__select--status4">Order send</option>
-                            <option value="5" class="status__select__option status__select--status5">Order arrived</option>
-                        </select>
-                    </div>
-                    <div v-else-if="order.status === 3" class="order__options order__options__id">
-                        <p class="order__status order__status--preparing admin__order__status"><span>Status: </span>Preparing order🎁</p>
-                        <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                            <option value="1" class="status__select__option status__select--status1">Order accepted</option>
-                            <option value="2" class="status__select__option status__select--status2">In production</option>
-                            <option value="3" class="status__select__option status__select--status3">Preparing order</option>
-                            <option value="4" class="status__select__option status__select--status4">Order send</option>
-                            <option value="5" class="status__select__option status__select--status5">Order arrived</option>
-                        </select>
-                    </div>
-                    <div v-else-if="order.status === 4" class="order__options order__options__id">
-                        <p class="order__status order__status--delivering admin__order__status"><span>Status: </span>Order send🚚</p>
-                        <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                            <option value="1" class="status__select__option status__select--status1">Order accepted</option>
-                            <option value="2" class="status__select__option status__select--status2">In production</option>
-                            <option value="3" class="status__select__option status__select--status3">Preparing order</option>
-                            <option value="4" class="status__select__option status__select--status4">Order send</option>
-                            <option value="5" class="status__select__option status__select--status5">Order arrived</option>
-                        </select>
-                    </div>
-                    <div v-else-if="order.status === 5" class="order__options order__options__id">
-                        <p class="order__status order__status--arrived admin__order__status"><span>Status: </span>Order arrived✅</p>
-                        <select id="status__select" name="status select" v-model="order.status" :style="{ backgroundColor: getStatusColor(order.status) }">
-                            <option value="1" class="status__select__option status__select__option--order status__select--status1">Order accepted</option>
-                            <option value="2" class="status__select__option status__select__option--order status__select--status2">In production</option>
-                            <option value="3" class="status__select__option status__select__option--order status__select--status3">Preparing order</option>
-                            <option value="4" class="status__select__option status__select__option--order status__select--status4">Order send</option>
-                            <option value="5" class="status__select__option status__select__option--order status__select--status5">Order arrived</option>
-                        </select>
-                    </div>
+                    <p class="order__status"><span>Status: </span>{{ order.status }}</p>
+                    <div class="order__options">
+                            <select id="status__select" name="status select" v-model="order.status" @change="updateOrderStatus(order)">
+                                <option value="Order Received" class="status__select__option status__select--status0" :selected="order.status === 'Order Received'" >Order Received</option>
+                                <option value="Order accepted" class="status__select__option status__select--status1" :selected="order.status === 'Order accepted'" >Order accepted</option>
+                                <option value="In production" class="status__select__option status__select--status2" :selected="order.status === 'In production'" >In production</option>
+                                <option value="Preparing order" class="status__select__option status__select--status3" :selected="order.status === 'Preparing order'" >Preparing order</option>
+                                <option value="Order send" class="status__select__option status__select--status4" :selected="order.status === 'Order send'" >Order send</option>
+                                <option value="Order arrived" class="status__select__option status__select--status5" :selected="order.status === 'Order arrived'" >Order arrived</option>
+                            </select>
+                            <button @click="cancelOrder(order)">Cancel Order</button>
+                        </div>
                 </div>
             </div>
         </div>
     </main>
+    </div>
+    <div v-else>
+        <p>Loading..</p>
+    </div>
 </template>
-
 <style scoped>
  .order__options__id select {
     width: 80%;

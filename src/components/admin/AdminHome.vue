@@ -149,7 +149,7 @@
                 </div>
                 <ul class="order__list order__list--admin">
                     <li class="order profile__order profile__order--admin" v-for="order in sortedOrders" :key="order.orderId">
-                        <a class="order__box order__box--admin" href="/order">
+                        <router-link :to="{ name: 'order', params: { orderId: order._id } }" class="order__box order__box--admin">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
                                 <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
@@ -157,7 +157,7 @@
                                 <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }} </p>
                                 <p><span>Order Status:</span> {{ order.status }}</p>
                             </div>
-                        </a>
+                        </router-link>
                         <div class="order__options">
                             <select id="status__select" name="status select" v-model="order.status" @change="updateOrderStatus(order)">
                                 <option value="Order Received" class="status__select__option status__select--status0" :selected="order.status === 'Order Received'" >Order Received</option>

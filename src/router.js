@@ -67,7 +67,8 @@ const routes = [
         },
     },
     {
-        path: '/order',
+        path: '/order/:orderId',
+        name: 'order',
         component: () => {
             if (isLoggedIn) {
                 return isAdmin ? AdminOrder : UserOrder;
