@@ -23,7 +23,6 @@ const user = ref(null);
 
 onMounted(async () => {
     user.value = await getUser();
-    console.log(user.value?.data.user);
 });
 </script>
 
@@ -32,25 +31,88 @@ onMounted(async () => {
         <Logo />
     </header>
     <main class="admin__profile">
-        <div class="main__content admin__profile__content">
+        <div class="admin__profile__content">
             <div class="admin__profile__fill"></div>
-            <div class="admin__profile__content">
-                <h1>Hey there, {{ user.data.user.first_name }} {{ user.data.user.last_name }}</h1>
-                <div>
-                    <p><span>Work location: </span></p>
-                    <div>
-                        <p>{{ user.data.user.adress }},</p>
-                        <p>{{ user.data.user.city }},</p>
-                        <p>{{ user.data.user.country }}</p>
+            <div v-if="user" class="admin__profile__data">
+                <div class="admin__data">
+                    <h1>Hey there, {{ user.data.user.first_name }} {{ user.data.user.last_name }}</h1>
+                    <div class="admin__data__location">
+                        <p><span>Work location: </span></p>
+                        <div class="admin__data__location__adress">
+                            <p>{{ user.data.user.adress }},</p>
+                            <p>{{ user.data.user.city }},</p>
+                            <p>{{ user.data.user.country }}</p>
+                        </div>
                     </div>
                 </div>
-                
-                <p><span>Admin status: </span></p>
+                <p><span>Admin status: </span> Editor</p>
+                <div class="change__password ">
+
+                </div>
+            </div>
+            <div v-else class="admin__profile__data">
+                <div class="admin__data">
+                    <h1>Hey there,  Admin</h1>
+                    <div class="admin__data__location">
+                        <p><span>Work location: </span></p>
+                        <div class="admin__data__location__adress">
+                            <p>Unknown</p>
+                        </div>
+                    </div>
+                    <p class="profile__admin__status"><span class="profile__admin__status--span">Admin status: </span> Editor</p>
+                </div>
+                <div class="change__password ">
+
+                </div>
             </div>
         </div>
     </main>
 </template>
 
 <style scoped>
+h1 {
+    margin-top: 16px;
+    margin-left: 16px;
+    color: #69ff47;
+}
 
+p span {
+    font-weight: bold;
+}
+
+.admin__profile__content {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    width: 100%;
+    height: 100%;
+}
+
+.admin__profile__fill {
+    background-image: url(../../assets/Swear-Back.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.admin__profile__data {
+    height: calc(100% - 90px);
+    margin-top: 90px;
+}
+
+.admin__data {
+    height: 40vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin__data__location {
+    display: flex;
+    align-items: top;
+}
+
+.profile__admin__status--span {
+    margin-right: 30px;
+}
 </style>
