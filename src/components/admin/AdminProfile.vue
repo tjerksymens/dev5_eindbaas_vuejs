@@ -24,6 +24,13 @@ const user = ref(null);
 onMounted(async () => {
     user.value = await getUser();
 });
+
+const handleReset =() => {
+    const currentpassword = document.querySelector('input[name="old-password"]').value;
+    const newpassword = document.querySelector('input[name="new-password"]').value;
+    const confirmpassword = document.querySelector('input[name="confirm password"]').value;
+    console.log(currentpassword, newpassword, confirmpassword);
+};
 </script>
 
 <template>
@@ -36,7 +43,7 @@ onMounted(async () => {
             <div v-if="user" class="admin__profile__data">
                 <div class="admin__data">
                     <h1>Hey there, {{ user.data.user.first_name }} {{ user.data.user.last_name }}</h1>
-                    <div class="admin__data__location">
+                    <div class="admin__data__location admin__data__section">
                         <p><span>Work location: </span></p>
                         <div class="admin__data__location__adress">
                             <p>{{ user.data.user.adress }},</p>
@@ -44,25 +51,65 @@ onMounted(async () => {
                             <p>{{ user.data.user.country }}</p>
                         </div>
                     </div>
+                    <div class="admin__data__status admin__data__section">
+                        <p><span>Admin status: </span></p>
+                        <p> Editor</p>
+                    </div>
                 </div>
-                <p><span>Admin status: </span> Editor</p>
                 <div class="change__password ">
-
+                    <h2>Reset your password</h2>
+                    <div class="reset__form">
+                        <div class="form__divider form__divider__1">
+                            <div class="password__field form__field password__field--old">
+                                <label for="old-password">Current password: </label>
+                                <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                            </div>
+                            <div class="password__field form__field password__field--new">
+                                <label for="new-password">New password: </label>
+                                <input type="password" placeholder="Enter New Password" name="new-password" required>
+                            </div>
+                            <div class="confirm-password__field form__field password__field--confirm">
+                                <label for="confirm-password">Confirm new password: </label>
+                                <input type="password" placeholder="Confirm New Password" name="confirm password" required>
+                            </div>
+                        </div>
+                        <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
+                    </div>
                 </div>
             </div>
             <div v-else class="admin__profile__data">
                 <div class="admin__data">
                     <h1>Hey there,  Admin</h1>
-                    <div class="admin__data__location">
+                    <div class="admin__data__location admin__data__section">
                         <p><span>Work location: </span></p>
                         <div class="admin__data__location__adress">
                             <p>Unknown</p>
                         </div>
                     </div>
-                    <p class="profile__admin__status"><span class="profile__admin__status--span">Admin status: </span> Editor</p>
+                    <div class="admin__data__status admin__data__section">
+                        <p class="profile__admin__status"><span class="profile__admin__status--span">Admin status: </span></p>
+                        <p> Editor</p>
+                    </div>
                 </div>
                 <div class="change__password ">
-
+                    <h2>Reset your password</h2>
+                    <div class="reset__form">
+                        <div class="form__divider form__divider__1">
+                            <div class="password__field form__field password__field--old">
+                                <label for="old-password">Current password: </label>
+                                <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                            </div>
+                            <div class="password__field form__field password__field--new">
+                                <label for="new-password">New password: </label>
+                                <input type="password" placeholder="Enter New Password" name="new-password" required>
+                            </div>
+                            <div class="confirm-password__field form__field password__field--confirm">
+                                <label for="confirm-password">Confirm new password: </label>
+                                <input type="password" placeholder="Confirm New Password" name="confirm password" required>
+                            </div>
+                        </div>
+                        <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,7 +135,7 @@ p span {
 }
 
 .admin__profile__fill {
-    background-image: url(../../assets/Swear-Back.jpg);
+    background-image: url(../../assets/Admin-Profile.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -107,12 +154,34 @@ p span {
     justify-content: space-between;
 }
 
-.admin__data__location {
+.admin__data__section {
+    width: 70%;
+    margin-left: 16px;
     display: flex;
     align-items: top;
+    justify-content: space-between;
+}
+
+.admin__data__location {
+    margin-top: 20px;
+}
+
+.admin__data__status {
+    margin-top: 8px;
+    margin-bottom: 16px;
 }
 
 .profile__admin__status--span {
     margin-right: 30px;
+}
+
+.change__password {
+    height: calc(60vh - 122px);
+    width: calc(100% - 32px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: lightgrey;
 }
 </style>
