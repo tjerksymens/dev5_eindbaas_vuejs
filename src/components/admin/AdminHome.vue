@@ -123,6 +123,30 @@
             console.error('Error updating order status:', error);
         }
     };
+
+    const cancelOrder = async (order) =>{
+        try {
+            const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${order._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to cancel order');
+            }
+
+            const data = await response.json();
+            console.log(data.data);
+            fetchOrders();
+
+        } catch (error) {
+            console.error('Error canceling order:', error);
+        }
+    };
+
 </script>
 
 <template>
@@ -168,7 +192,7 @@
                                 <option value="Order send" class="status__select__option status__select--status4" :selected="order.status === 'Order send'" >Order send</option>
                                 <option value="Order arrived" class="status__select__option status__select--status5" :selected="order.status === 'Order arrived'" >Order arrived</option>
                             </select>
-                            <button>Cancel Order</button>
+                            <button @click="cancelOrder(order)">Cancel Order</button>
                         </div>
                     </li>
                 </ul>
