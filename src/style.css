@@ -574,6 +574,10 @@ p {
     margin-right: 2%;
 }
 
+.customer {
+    margin-left: 0;
+}
+
 .order__data p span {
     font-weight: 700;
 }
