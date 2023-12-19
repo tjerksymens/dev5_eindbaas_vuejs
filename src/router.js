@@ -41,7 +41,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
@@ -56,7 +56,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
@@ -70,7 +70,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
@@ -84,7 +84,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
@@ -99,7 +99,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
@@ -114,7 +114,7 @@ const routes = [
                     resolve(component);
                 } else {
                     router.push('/login');
-                    resolve({ template: '<div></div>' });
+                    resolve({ template: '<div>An error has occured. Please contact us 😅</div>' });
                 }
             });
         },
