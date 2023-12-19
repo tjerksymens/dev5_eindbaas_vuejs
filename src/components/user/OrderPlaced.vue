@@ -90,9 +90,9 @@ const updateOrderStatus = async (order) => {
                     <div class="order__payment">
                         <h2>Select your payment method</h2>
                         <div class="order__payment__options">
-                            <a class="order__payment__method" href=#>Paypal</a>
-                            <a class="order__payment__method" href=#>Apple Pay</a>
-                            <a class="order__payment__method" href=#>Bancontact</a>
+                            <a class="order__payment__method" href="#">Paypal</a>
+                            <a class="order__payment__method" href="#">Apple Pay</a>
+                            <a class="order__payment__method" href="#">Bancontact</a>
                         </div>
                     </div>
                 </div>
@@ -131,10 +131,10 @@ const updateOrderStatus = async (order) => {
 
 .order__payment__method {
     width: 30%;
-    height: 40px;
+    height: 60px;
     border-radius: 12px;
     background-color: #4769FF;
-    color: #000;
+    color: #FFF;
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
