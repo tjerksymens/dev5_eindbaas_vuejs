@@ -234,6 +234,7 @@ p span {
 
 .admin__data {
     height: 40vh;
+    min-height: 280px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -263,6 +264,7 @@ p span {
 
 .admin__profile__settings {
     height: calc(60vh - 122px);
+    min-height: 300px;
     width: calc(100% - 32px);
     padding: 16px;
     display: grid;
@@ -289,5 +291,21 @@ p span {
 .logout__btn {
     height: 60px;
     margin-bottom: 24px;
+}
+
+@media screen and (max-width: 1300px) {
+    .admin__profile__content {
+        grid-template-columns: 1fr 3fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .admin__profile__content {
+        display: flex;
+    }
+    
+    .admin__profile__fill {
+        display: none;
+    }
 }
 </style>
