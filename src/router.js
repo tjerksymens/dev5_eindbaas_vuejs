@@ -1,35 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from './components/general/Login.vue';
 import Signup from './components/general/Signup.vue';
-import AdminHome from './components/admin/AdminHome.vue';
-import UserHome from './components/user/UserHome.vue';
-import AdminOrder from './components/admin/AdminOrder.vue';
-import UserOrder from './components/user/UserOrder.vue';
-import AdminProfile from './components/admin/AdminProfile.vue';
-import UserProfile from './components/user/UserProfile.vue';
+import Home from './components/pages/Home.vue';
+import Order from './components/pages/Order.vue';
+import Profile from './components/pages/Profile.vue';
 import ShoeCreator from './components/user/ShoeCreator.vue';
 import OrderPlaced from './components/user/OrderPlaced.vue';
 import OrderConfirmed from './components/user/OrderConfirmed.vue';
-
-const checkAdmin = async () => {
-  try {
-    const response = await fetch(
-      `https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/check-admin/${localStorage.getItem("token")}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-    return data?.data?.admin === true;
-  } catch (error) {
-    console.error('Error fetching user information:', error);
-    return false;
-  }
-};
 
 const isLoggedIn = () => localStorage.getItem("token");
 
@@ -40,15 +17,13 @@ const router = createRouter({
         { path: '/signup', component: Signup },
         {
             path: '/',
+            name: 'home',
             component: () => {
-            return new Promise((resolve) => {
-                if (isLoggedIn()) {
-                const component = checkAdmin() ? AdminHome : UserHome;
-                resolve(component);
-                } else {
-                resolve(Login);
-                }
-            });
+            if (isLoggedIn()) {
+                return Home;
+            } else {
+                return Login;
+            }
             },
         },
         {
@@ -56,7 +31,7 @@ const router = createRouter({
             name: 'order',
             component: () => {
             if (isLoggedIn()) {
-                return checkAdmin() ? AdminOrder : UserOrder;
+                return Order;
             } else {
                 return Login;
             }
@@ -66,7 +41,7 @@ const router = createRouter({
         path: '/profile',
         component: () => {
             if (isLoggedIn()) {
-            return checkAdmin() ? AdminProfile : UserProfile;
+            return Profile;
             } else {
             return Login;
             }
@@ -76,7 +51,7 @@ const router = createRouter({
         path: '/create',
         component: () => {
             if (isLoggedIn()) {
-            return checkAdmin() ? UserHome : ShoeCreator;
+            return ShoeCreator;
             } else {
             return Login;
             }
@@ -87,7 +62,7 @@ const router = createRouter({
         name: 'confirm',
         component: () => {
             if (isLoggedIn()) {
-            return checkAdmin() ? UserHome : OrderPlaced;
+            return OrderPlaced;
             } else {
             return Login;
             }
@@ -98,7 +73,7 @@ const router = createRouter({
         name: 'confirmed',
         component: () => {
             if (isLoggedIn()) {
-            return checkAdmin() ? UserHome : OrderConfirmed;
+            return OrderConfirmed;
             } else {
             return Login;
             }
