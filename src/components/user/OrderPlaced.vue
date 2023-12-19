@@ -23,13 +23,6 @@ onMounted(async () => {
         const data = await response.json();
         order.value = data.data.shoe;
 
-        if (document.querySelector(".order__payment__method")) {
-            document.querySelector(".order__payment__method").addEventListener("click", () => {
-                updateOrderStatus(order.value);
-                console.log("Order status updated");
-            });
-        }
-
         // Log order.value after setting its value
         console.log(order.value);
         
@@ -39,15 +32,15 @@ onMounted(async () => {
 });
 
 const updateOrderStatus = async (order) => {
+    console.log("order being payed");
     try {
-        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/payment/${orderId.value}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify({
-                status: 'Order Paid',
+                status: 'Order Accepted',
             }),
         });
 
@@ -90,9 +83,9 @@ const updateOrderStatus = async (order) => {
                     <div class="order__payment">
                         <h2>Select your payment method</h2>
                         <div class="order__payment__options">
-                            <a class="order__payment__method" href="#">Paypal</a>
-                            <a class="order__payment__method" href="#">Apple Pay</a>
-                            <a class="order__payment__method" href="#">Bancontact</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Paypal</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Apple Pay</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Bancontact</a>
                         </div>
                     </div>
                 </div>
