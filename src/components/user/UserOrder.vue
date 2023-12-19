@@ -46,7 +46,7 @@ onMounted(async () => {
         <div class="main__content confirmed__content">
             <div class="order__head">
                 <h1 class="confirmed__title">Order information</h1>
-                <a class="order__close" href="/"></a>
+                <a class="order__close" href="/profile"></a>
             </div>
             <div class="confirmed__order">
                 <div class="order__snapshot confirmed__order__snapshot">

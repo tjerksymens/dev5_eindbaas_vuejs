@@ -98,7 +98,8 @@ onMounted(async () => {
 <template>
     <header>
         <Logo />
-        <nav class="nav--one-button">
+        <nav>
+            <a href="/" class="button__header">Home</a>
             <a href="/create" class="button__header">Create</a>
         </nav>
     </header>

@@ -76,7 +76,8 @@ const closePopup = () => {
 <template>
     <header>
         <Logo />
-        <nav class="nav--one-button">
+        <nav>
+            <a href="/" class="button__header">Home</a>
             <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
