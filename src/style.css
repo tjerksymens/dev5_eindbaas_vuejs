@@ -716,7 +716,7 @@ p {
 
 .confirm__order__data, .confirmed__order__data {
     margin-left: 10%;
-    width: calc(40% -40px);
+    width: calc(40% - 40px);
 }
 
 .confirm__order__status, .confirmed__order__status, .admin__order__status {
