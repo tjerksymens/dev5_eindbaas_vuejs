@@ -68,5 +68,7 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
-
+.password__field {
+    margin-bottom: 16px;
+}
 </style>

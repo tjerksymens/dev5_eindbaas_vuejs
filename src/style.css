@@ -163,8 +163,8 @@ p {
 
 /*FORM*/
 .form__background {
-    width: 40%;
-    height: 60%;
+    width: 600px;
+    height: 360px;
     background-color: var(--Black);
     opacity: 0.6;
     border-radius: 12px;
@@ -173,16 +173,16 @@ p {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    margin-left: 30%;
-    margin-top: 4%;
+    margin-left: calc(50% - 320px);
+    margin-top: 64px;
 }
 
 .form__content {
     position: absolute;
-    top: 30%;
-    left: calc(30% + 20px);
-    width: 40%;
-    height: 60%;
+    top: 164px;
+    left: calc(50% - 310px);
+    width: 620px;
+    height: 380px;
 }
 
 .form__title {
@@ -287,12 +287,30 @@ p {
     text-align: center;
 }
 
+@media screen and (max-width: 700px) {
+    .form__background {
+        width: 90%;
+        margin-left: calc(5% - 20px);
+    }
+
+    .form__content {
+        width: 90%;
+        margin-left: calc(5% - 20px);
+    }
+}
+
 /*LOGIN SIGNUP*/
 .login, .signup {
     background-image: url("../src/assets/SwearLogin.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.login__form__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .login__container {

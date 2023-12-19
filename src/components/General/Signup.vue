@@ -151,18 +151,18 @@ const handleSignup = () => {
 <style scoped>
 .signup__form__background {
     width: 80%;
-    height: 80%;
-    margin-left: 10%;
+    height: 480px;
+    margin-left: calc(10% - 20px);
 }
 
 .signup__form__content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 70%;
+    height: 480px;
     width: 80%;
-    left: calc(10% + 20px);
-    top: calc(10% + 100px);
+    left: calc(10% - 20px);
+    top: 174px;
     overflow-y: scroll;
 }
 
