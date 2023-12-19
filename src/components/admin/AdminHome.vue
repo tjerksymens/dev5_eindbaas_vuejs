@@ -8,8 +8,17 @@
     let firstName = "Capitan";
     let lastName = "Admin";
 
+    let socketServer;
+
+
     // Fetch user data
     onMounted(async () => {
+        socketServer = new WebSocket("wss://dev5-eindbaas-nodejs-api.onrender.com/primus");
+
+        socketServer.onopen = () => {
+            console.log('WebSocket connection opened');
+        };
+
         try {
             const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/users/${localStorage.getItem("token")}`, {
                 method: 'GET',
@@ -57,6 +66,21 @@
             const data = await response.json();
             orders.value = data.data;
 
+            socketServer.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log(data);
+
+                const orderIndex = orders.value.findIndex(order => order._id === data.data._id);
+
+                if (orderIndex !== -1) {
+                    // If the order exists in the array, update it
+                    orders.value[orderIndex] = data.data;
+                } else {
+                    // If the order doesn't exist, add it to the array
+                    orders.value.push(data.data);
+                }
+            };
+
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -91,18 +115,35 @@
                 }),
             });
 
+            if (response === undefined) {
+                throw new Error('Empty response received');
+            }
+
             if (!response.ok) {
                 throw new Error('Failed to update order status');
             }
 
             const data = await response.json();
-
+            console.log('Order placed successfully:', data);
+            console.log(data.data);
+            orderStatusSocket(data.data);
         } catch (error) {
             console.error('Error updating order status:', error);
         }
     };
 
-    const cancelOrder = async (order) =>{
+
+    const orderStatusSocket = (order) => {
+        console.log('orderStatusSocket 🚚', order)
+        let data = {
+            action: 'orderStatus',
+            order: order,
+        };
+
+        socketServer.send(JSON.stringify(data));
+    };
+
+    const cancelOrder = async (order) => {
         try {
             const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${order._id}`, {
                 method: 'DELETE',
@@ -118,11 +159,23 @@
 
             const data = await response.json();
             fetchOrders();
+            cancelSocket(data.data._id);
 
         } catch (error) {
             console.error('Error canceling order:', error);
         }
     };
+
+    const cancelSocket = (orderId) => {
+    console.log('cancelSocket 🗑️')
+    let data = {
+        action: 'cancel',
+        orderId: orderId,
+    };
+
+    socketServer.send(JSON.stringify(data));
+};
+
 
 </script>
 

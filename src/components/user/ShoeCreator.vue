@@ -9,6 +9,8 @@ import { Configurator } from '../../classes/Configurator';
 import * as TWEEN from '@tweenjs/tween.js';
 import { onMounted } from "vue";
 
+let socketServer;
+
 const scene = new THREE.Scene();
 
 const captureSnapshot = () => {
@@ -56,6 +58,8 @@ const captureSnapshot = () => {
 };
 
 onMounted(() => {
+    socketServer = new WebSocket("wss://dev5-eindbaas-nodejs-api.onrender.com/primus");
+
     const draco = new DRACOLoader();
     draco.setDecoderConfig({ type: 'js' });
     draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
@@ -204,11 +208,23 @@ onMounted(() => {
             console.log('Order placed successfully:', data);
             console.log(data.data[0]._id);
             window.location.href =`/confirm/${data.data[0]._id}`;
+
+            orderSocket(data.data[0]);
         })
         .catch((error) => {
             console.error('Error placing order:', error);
         });
     }
+
+    const orderSocket = (orderData) => {
+        console.log('orderSocket 🚚', orderData);
+        let data = {
+            action: 'order',
+            order: orderData,
+        };
+
+        socketServer.send(JSON.stringify(data));
+    };
 
     function captureSnapshot() {
         const canvasContainer = document.getElementById('canvasContainer');
