@@ -2,6 +2,13 @@
 import Logo from "../general/Logo.vue";
 import { ref, watchEffect, onMounted } from "vue";
 
+
+const firstName = ref('');
+const lastName = ref('');
+const username = ref('');
+const orders = ref([]);
+const sortedOrders = ref([]);
+
 // Fetch user data
 onMounted(async () => {
         try {
@@ -21,12 +28,15 @@ onMounted(async () => {
             
             if (responseData.data && responseData.data.user) {
                 const user = responseData.data.user;
-                if (user.first_name && user.last_name) {
-                    firstName = user.first_name;
-                    lastName = user.last_name;
+                //so code works untill here, but the user.first_name doesn't work in the if statement anymore
+                if (user.first_name && user.last_name && user.username) {
+                    firstName.value = user.first_name;
+                    lastName.value = user.last_name;
+                    username.value = user.username;
                 } else {
                     console.error('Invalid user data:', user);
                 }
+                return firstName, lastName;
             } else {
                 console.error('Invalid API response:', responseData);
             }
@@ -49,22 +59,16 @@ onMounted(async () => {
             }
 
             const data = await response.json();
-            console.log(data.data);
-            orders.value = data.data;
+            orders.value = data.data.filter(order => order.user.username === username.value);
 
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
     };
 
-    onMounted(fetchOrdersByUser);
-    // Declare a reactive variable to store the orders
-    const orders = ref([]);
+    console.log(firstName, lastName)
 
-    // Create a computed property to return a sorted copy of the orders array
-    //orders worden geordend op status value
-    //zo komen de nieuwste orders bovenaan te staan
-    const sortedOrders = ref([]);
+    onMounted(fetchOrdersByUser);
 
     // Watch for changes in the original orders array and update the sortedOrders
     watchEffect(() => {
@@ -89,7 +93,7 @@ onMounted(async () => {
                 <h2>Your Orders</h2>
                 <ul class="order__list order__list--user">
                     <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
-                        <a class="order__box" href="/order">
+                        <a class="order__box profile__order__box" href="/order">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
                                 <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
@@ -100,6 +104,9 @@ onMounted(async () => {
                         </a>
                     </li>
                 </ul>
+            </div>
+            <div class="profile__logout">
+
             </div>
         </div>
     </main>
@@ -118,5 +125,9 @@ onMounted(async () => {
 
 .order__list--user {
     height: calc(100vh - 250px);
+}
+
+.profile__order__box {
+    width: calc(100% - 40px);
 }
 </style>
