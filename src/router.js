@@ -23,65 +23,63 @@ const checkAdmin = async () => {
 const isLoggedIn = localStorage.getItem("token");
 const isAdmin = isLoggedIn ? await checkAdmin() : false;
 
-const routes = [
-  { path: '/login', component: () => import('./components/general/Login.vue') },
-  { path: '/signup', component: () => import('./components/general/Signup.vue') },
-  {
-    path: '/',
-    component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Home.vue`),
-  },
-  {
-    path: '/order/:orderId',
-    name: 'order',
-    component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Order.vue`),
-  },
-  {
-    path: '/profile',
-    component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Profile.vue`),
-  },
-  {
-    path: '/create',
-    component: () => import(`./components/user/ShoeCreator.vue`),
-    beforeEnter: (to, from, next) => {
-        // Check if the user is an admin, redirect if they are
-        if (isAdmin) {
-          next('/');
-        } else {
-          next();
-        }
-      },
-  },
-  {
-    path: '/confirm/:orderId',
-    name: 'confirm',
-    component: () => import('./components/user/OrderPlaced.vue'),
-    beforeEnter: (to, from, next) => {
-        // Check if the user is an admin, redirect if they are
-        if (isAdmin) {
-          next('/');
-        } else {
-          next();
-        }
-      },
-  },
-  {
-    path: '/confirmed/:orderId',
-    name: 'confirmed',
-    component: () => import('./components/user/OrderConfirmed.vue'),
-    beforeEnter: (to, from, next) => {
-        // Check if the user is an admin, redirect if they are
-        if (isAdmin) {
-          next('/');
-        } else {
-          next();
-        }
-      },
-  },
-];
-
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: [
+    { path: '/login', component: () => import('./components/general/Login.vue') },
+    { path: '/signup', component: () => import('./components/general/Signup.vue') },
+    {
+      path: '/',
+      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Home.vue`),
+    },
+    {
+      path: '/order/:orderId',
+      name: 'order',
+      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Order.vue`),
+    },
+    {
+      path: '/profile',
+      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Profile.vue`),
+    },
+    {
+      path: '/create',
+      component: () => import(`./components/user/ShoeCreator.vue`),
+      beforeEnter: (to, from, next) => {
+          // Check if the user is an admin, redirect if they are
+          if (isAdmin) {
+            next('/');
+          } else {
+            next();
+          }
+        },
+    },
+    {
+      path: '/confirm/:orderId',
+      name: 'confirm',
+      component: () => import('./components/user/OrderPlaced.vue'),
+      beforeEnter: (to, from, next) => {
+          // Check if the user is an admin, redirect if they are
+          if (isAdmin) {
+            next('/');
+          } else {
+            next();
+          }
+        },
+    },
+    {
+      path: '/confirmed/:orderId',
+      name: 'confirmed',
+      component: () => import('./components/user/OrderConfirmed.vue'),
+      beforeEnter: (to, from, next) => {
+          // Check if the user is an admin, redirect if they are
+          if (isAdmin) {
+            next('/');
+          } else {
+            next();
+          }
+        },
+    },
+  ]
 });
 
 export default router;
