@@ -1,4 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Login from './components/general/Login.vue';
+import Signup from './components/general/Signup.vue';
+import AdminHome from './components/admin/AdminHome.vue';
+import UserHome from './components/user/UserHome.vue';
+import AdminOrder from './components/admin/AdminOrder.vue';
+import UserOrder from './components/user/UserOrder.vue';
+import AdminProfile from './components/admin/AdminProfile.vue';
+import UserProfile from './components/user/UserProfile.vue';
+import ShoeCreator from './components/user/ShoeCreator.vue';
+import OrderPlaced from './components/user/OrderPlaced.vue';
+import OrderConfirmed from './components/user/OrderConfirmed.vue';
 
 const checkAdmin = async () => {
   try {
@@ -20,66 +31,80 @@ const checkAdmin = async () => {
   }
 };
 
-const isLoggedIn = localStorage.getItem("token");
-const isAdmin = isLoggedIn ? await checkAdmin() : false;
+const isLoggedIn = () => localStorage.getItem("token");
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    { path: '/login', component: () => import('./components/general/Login.vue') },
-    { path: '/signup', component: () => import('./components/general/Signup.vue') },
-    {
-      path: '/',
-      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Home.vue`),
-    },
-    {
-      path: '/order/:orderId',
-      name: 'order',
-      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Order.vue`),
-    },
-    {
-      path: '/profile',
-      component: () => import(`./components/${isAdmin ? 'admin' : 'user'}/${isAdmin ? 'Admin' : 'User'}Profile.vue`),
-    },
-    {
-      path: '/create',
-      component: () => import(`./components/user/ShoeCreator.vue`),
-      beforeEnter: (to, from, next) => {
-          // Check if the user is an admin, redirect if they are
-          if (isAdmin) {
-            next('/');
-          } else {
-            next();
-          }
+    history: createWebHistory(),
+    routes: [
+        { path: '/login', component: Login },
+        { path: '/signup', component: Signup },
+        {
+            path: '/',
+            component: () => {
+            return new Promise((resolve) => {
+                if (isLoggedIn()) {
+                const component = checkAdmin() ? AdminHome : UserHome;
+                resolve(component);
+                } else {
+                resolve(Login);
+                }
+            });
+            },
         },
-    },
-    {
-      path: '/confirm/:orderId',
-      name: 'confirm',
-      component: () => import('./components/user/OrderPlaced.vue'),
-      beforeEnter: (to, from, next) => {
-          // Check if the user is an admin, redirect if they are
-          if (isAdmin) {
-            next('/');
-          } else {
-            next();
-          }
+        {
+            path: '/order/:orderId',
+            name: 'order',
+            component: () => {
+            if (isLoggedIn()) {
+                return checkAdmin() ? AdminOrder : UserOrder;
+            } else {
+                return Login;
+            }
+            },
         },
-    },
-    {
-      path: '/confirmed/:orderId',
-      name: 'confirmed',
-      component: () => import('./components/user/OrderConfirmed.vue'),
-      beforeEnter: (to, from, next) => {
-          // Check if the user is an admin, redirect if they are
-          if (isAdmin) {
-            next('/');
-          } else {
-            next();
-          }
+        {
+        path: '/profile',
+        component: () => {
+            if (isLoggedIn()) {
+            return checkAdmin() ? AdminProfile : UserProfile;
+            } else {
+            return Login;
+            }
         },
-    },
-  ]
+        },
+        {
+        path: '/create',
+        component: () => {
+            if (isLoggedIn()) {
+            return checkAdmin() ? UserHome : ShoeCreator;
+            } else {
+            return Login;
+            }
+        },
+        },
+        {
+        path: '/confirm/:orderId',
+        name: 'confirm',
+        component: () => {
+            if (isLoggedIn()) {
+            return checkAdmin() ? UserHome : OrderPlaced;
+            } else {
+            return Login;
+            }
+        },
+        },
+        {
+        path: '/confirmed/:orderId',
+        name: 'confirmed',
+        component: () => {
+            if (isLoggedIn()) {
+            return checkAdmin() ? UserHome : OrderConfirmed;
+            } else {
+            return Login;
+            }
+        },
+        },
+  ],
 });
 
 export default router;
