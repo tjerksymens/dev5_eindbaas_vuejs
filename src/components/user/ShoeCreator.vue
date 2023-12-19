@@ -203,7 +203,7 @@ onMounted(() => {
         .then((data) => {
             console.log('Order placed successfully:', data);
             console.log(data.data[0]._id);
-            //window.location.href =`/confirm/${data.data[0]._id}`;
+            window.location.href =`/confirm/${data.data[0]._id}`;
         })
         .catch((error) => {
             console.error('Error placing order:', error);
