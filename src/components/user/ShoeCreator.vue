@@ -12,48 +12,48 @@ import { onMounted } from "vue";
 const scene = new THREE.Scene();
 
 const captureSnapshot = () => {
-        const canvasContainer = document.getElementById('canvasContainer');
+    const canvasContainer = document.getElementById('canvasContainer');
 
-        // Create a new renderer and set its size
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(400, 400);
-        renderer.shadowMap.enabled = true;
+    // Create a new renderer and set its size
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(400, 400);
+    renderer.shadowMap.enabled = true;
 
-        // Create a new scene and camera
-        const snapshotScene = new THREE.Scene();
-        snapshotScene.background = new THREE.Color(0xffffff);
-        const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
-        snapshotScene.camera = snapshotCamera;
+    // Create a new scene and camera
+    const snapshotScene = new THREE.Scene();
+    snapshotScene.background = new THREE.Color(0xffffff);
+    const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+    snapshotScene.camera = snapshotCamera;
 
-        snapshotCamera.position.set(0, 0.7, 1.5);
-        snapshotCamera.lookAt(0, 0.7, -0.5);
+    snapshotCamera.position.set(0, 0.7, 1.5);
+    snapshotCamera.lookAt(0, 0.7, -0.5);
 
-        // Clone the objects from the original scene to the snapshot scene
-        scene.children.forEach((child) => {
-            const clone = child.clone(true);
-            snapshotScene.add(clone);
-        });
-        
-        // Set up the renderer for the snapshot scene
-        const snapshotCanvas = renderer.domElement;
-        canvasContainer.appendChild(snapshotCanvas);
+    // Clone the objects from the original scene to the snapshot scene
+    scene.children.forEach((child) => {
+        const clone = child.clone(true);
+        snapshotScene.add(clone);
+    });
+    
+    // Set up the renderer for the snapshot scene
+    const snapshotCanvas = renderer.domElement;
+    canvasContainer.appendChild(snapshotCanvas);
 
-        // Render the snapshot scene
-        renderer.render(snapshotScene, snapshotCamera);
+    // Render the snapshot scene
+    renderer.render(snapshotScene, snapshotCamera);
 
-        // Get the data URL of the current canvas state
-        const dataURL = snapshotCanvas.toDataURL("image/png");
+    // Get the data URL of the current canvas state
+    const dataURL = snapshotCanvas.toDataURL("image/png");
 
-        // Open the data URL in a new tab or window
-        const newTab = window.open();
-        newTab.document.write(`<img src="${dataURL}" alt="Snapshot" />`);
+    // Open the data URL in a new tab or window
+    const newTab = window.open();
+    newTab.document.write(`<img src="${dataURL}" alt="Snapshot" />`);
 
-        // Download the data URL as a file
-        const downloadLink = document.createElement('a');
-        downloadLink.href = dataURL;
-        downloadLink.download = 'snapshot.png';
-        downloadLink.click();
-    };
+    // Download the data URL as a file
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataURL;
+    downloadLink.download = 'SwearCostomShoeSnapshot.png';
+    downloadLink.click();
+};
 
 onMounted(() => {
     const draco = new DRACOLoader();
@@ -181,17 +181,23 @@ onMounted(() => {
         // Perform an HTTP request (e.g., using fetch) to send the configuration to your Node.js API
         const token = localStorage.getItem('token');
 
+        const snapshotDataURL = captureSnapshot();
+
+        const orderData = {
+            name: shoeName,
+            configuration,
+            price,
+            size: selectedSize,
+            snapshot: snapshotDataURL,
+        };
+
         fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${localStorage.getItem("token")}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify({ 
-                name: shoeName, 
-                configuration,
-                price,
-                size: selectedSize,}),
+            body: JSON.stringify(orderData),
         })
         .then((response) => response.json())
         .then((data) => {
@@ -202,7 +208,19 @@ onMounted(() => {
         .catch((error) => {
             console.error('Error placing order:', error);
         });
-        }
+    }
+
+    function captureSnapshot() {
+        const canvasContainer = document.getElementById('canvasContainer');
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(400, 400);
+
+        renderer.render(snapshotScene, snapshotCamera);
+
+        const dataURL = renderer.domElement.toDataURL("image/png");
+
+        return dataURL;
+    }
 });
 
 
