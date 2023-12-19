@@ -55,7 +55,6 @@
             }
 
             const data = await response.json();
-            console.log(data.data);
             orders.value = data.data;
 
         } catch (error) {
@@ -74,7 +73,6 @@
 
     // Watch for changes in the original orders array and update the sortedOrders
     watchEffect(() => {
-        console.log('Orders changed:', orders.value);
         sortedOrders.value = orders.value.slice().sort((a, b) => {
             return b.status - a.status;
         });
@@ -98,7 +96,6 @@
             }
 
             const data = await response.json();
-            console.log(data.data);
 
         } catch (error) {
             console.error('Error updating order status:', error);
@@ -120,7 +117,6 @@
             }
 
             const data = await response.json();
-            console.log(data.data);
             fetchOrders();
 
         } catch (error) {
