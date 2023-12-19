@@ -11,74 +11,74 @@ import OrderConfirmed from './components/user/OrderConfirmed.vue';
 const isLoggedIn = () => localStorage.getItem("token");
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        { path: '/login', component: Login },
-        { path: '/signup', component: Signup },
-        {
-            path: '/',
-            name: 'home',
-            component: () => {
-            if (isLoggedIn()) {
-                return Home;
-            } else {
-                return Login;
-            }
-            },
-        },
-        {
-            path: '/order/:orderId',
-            name: 'order',
-            component: () => {
-            if (isLoggedIn()) {
-                return Order;
-            } else {
-                return Login;
-            }
-            },
-        },
-        {
-        path: '/profile',
-        component: () => {
-            if (isLoggedIn()) {
-            return Profile;
-            } else {
-            return Login;
-            }
-        },
-        },
-        {
-        path: '/create',
-        component: () => {
-            if (isLoggedIn()) {
-            return ShoeCreator;
-            } else {
-            return Login;
-            }
-        },
-        },
-        {
-        path: '/confirm/:orderId',
-        name: 'confirm',
-        component: () => {
-            if (isLoggedIn()) {
-            return OrderPlaced;
-            } else {
-            return Login;
-            }
-        },
-        },
-        {
-        path: '/confirmed/:orderId',
-        name: 'confirmed',
-        component: () => {
-            if (isLoggedIn()) {
-            return OrderConfirmed;
-            } else {
-            return Login;
-            }
-        },
-        },
+  history: createWebHistory(),
+  routes: [
+    { path: '/login', component: () => import('./components/general/Login.vue') },
+    { path: '/signup', component: () => import('./components/general/Signup.vue') },
+    {
+      path: '/',
+      name: 'home',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/pages/Home.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
+    {
+      path: '/order/:orderId',
+      name: 'order',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/pages/Order.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
+    {
+      path: '/profile',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/pages/Profile.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
+    {
+      path: '/create',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/user/ShoeCreator.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
+    {
+      path: '/confirm/:orderId',
+      name: 'confirm',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/user/OrderPlaced.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
+    {
+      path: '/confirmed/:orderId',
+      name: 'confirmed',
+      component: () => {
+        if (isLoggedIn()) {
+          return import('./components/user/OrderConfirmed.vue');
+        } else {
+          return import('./components/general/Login.vue');
+        }
+      },
+    },
   ],
 });
 
