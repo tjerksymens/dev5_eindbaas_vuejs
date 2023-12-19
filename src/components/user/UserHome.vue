@@ -63,7 +63,7 @@
     }
 
     .home--user__title {
-        animation: roll 15s linear infinite;
+        animation: roll 20s linear infinite;
     }
 
     @keyframes roll {
@@ -77,6 +77,150 @@
         100% {
             transform: translateX(-180%);
             opacity: 1;
+        }
+    }
+
+    @media screen and (max-width: 1300px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-200%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-220%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1100px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-240%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-260%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-290%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 800px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-350%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-390%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-450%);
+                opacity: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        @keyframes roll {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            1% {
+                opacity: 1; /* Gradually increase opacity at the beginning of the animation */
+            }
+            100% {
+                transform: translateX(-500%);
+                opacity: 1;
+            }
         }
     }
 </style>
