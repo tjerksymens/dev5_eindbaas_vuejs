@@ -18,9 +18,7 @@ const checkAdmin = async () => {
     );
 
     const data = await response.json();
-    console.log(data);
     isAdmin.value = data?.data?.admin === true;
-    console.log(isAdmin);
     return isAdmin;
   } catch (error) {
     console.error('Error fetching user information:', error);
