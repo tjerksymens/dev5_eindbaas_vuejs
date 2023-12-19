@@ -521,6 +521,12 @@ p {
     background-repeat: no-repeat;
 }
 
+.order__snapshot img {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
 .order__data {
     display: flex;
     flex-direction: column;

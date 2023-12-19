@@ -215,6 +215,22 @@ onMounted(() => {
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(400, 400);
 
+
+        const snapshotScene = new THREE.Scene();
+        snapshotScene.background = new THREE.Color(0xffffff);
+        const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+        renderer.render(snapshotScene, snapshotCamera);
+        snapshotCamera.position.set(0, 0.7, 1.5);
+        snapshotCamera.lookAt(0, 0.7, -0.5);
+
+        scene.children.forEach((child) => {
+            const clone = child.clone(true);
+            snapshotScene.add(clone);
+        });
+        
+        const snapshotCanvas = renderer.domElement;
+        canvasContainer.appendChild(snapshotCanvas);
+
         renderer.render(snapshotScene, snapshotCamera);
 
         const dataURL = renderer.domElement.toDataURL("image/png");
