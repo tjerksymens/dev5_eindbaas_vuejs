@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+      { "source": "/login", "destination": "/login.html" },
+      { "source": "/signup", "destination": "/signup.html" },
+      { "source": "/order/:orderId", "destination": "/order/:orderId.html" },
+      { "source": "/profile", "destination": "/profile.html" },
+      { "source": "/create", "destination": "/create.html" },
+      { "source": "/confirm/:orderId", "destination": "/confirm/:orderId.html" },
+      { "source": "/confirmed/:orderId", "destination": "/confirmed/:orderId.html" },
+      { "source": "/(.*)", "destination": "/index.html" }
+    ]
+  }
