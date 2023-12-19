@@ -22,9 +22,6 @@ onMounted(async () => {
 
         const data = await response.json();
         order.value = data.data.shoe;
-
-        // Log order.value after setting its value
-        console.log(order.value);
         
     } catch (error) {
         console.error('Error fetching order details:', error.message);
@@ -32,7 +29,6 @@ onMounted(async () => {
 });
 
 const updateOrderStatus = async (order) => {
-    //if order status is Order Received, update to Order Accepted
     if (order.status === "Order Received"){
         try {
         const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/payment/${orderId.value}`, {
@@ -47,8 +43,8 @@ const updateOrderStatus = async (order) => {
         .then((response) => response.json())
         .then((data) => {
                 console.log('Order placed successfully:', data);
-                console.log(data.data[0]._id);
-                window.location.href =`/confirmed/${data.data[0]._id}`;
+                console.log(data.data._id);
+                window.location.href =`/confirmed/${order._id}`;
         });
 
         if (!response.ok) {
@@ -93,9 +89,9 @@ const updateOrderStatus = async (order) => {
                     <div class="order__payment">
                         <h2>Select your payment method</h2>
                         <div class="order__payment__options">
-                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Paypal</a>
-                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Apple Pay</a>
-                            <a class="order__payment__method" href=# @click="updateOrderStatus()">Bancontact</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus(order)">Paypal</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus(order)">Apple Pay</a>
+                            <a class="order__payment__method" href=# @click="updateOrderStatus(order)">Bancontact</a>
                         </div>
                     </div>
                 </div>
