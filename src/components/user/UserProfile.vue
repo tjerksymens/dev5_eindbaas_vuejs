@@ -109,15 +109,15 @@ onMounted(async () => {
                 <h2>Your Orders</h2>
                 <ul class="order__list order__list--user">
                     <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
-                        <a class="order__box profile__order__box" href="/order">
+                        <router-link :to="{ name: 'order', params: { orderId: order._id } }" class="order__box profile__order__box">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
                                 <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
-                                <p class="order__shoe"><span>Shoe name:</span> {{ order.name }}</p>
-                                <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }}</p>
+                                <p class="order__shoe"><span>Shoe ID:</span> {{ order.name }}</p>
+                                <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }} </p>
                                 <p><span>Order Status:</span> {{ order.status }}</p>
                             </div>
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>
