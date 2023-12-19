@@ -32,8 +32,9 @@ onMounted(async () => {
 });
 
 const updateOrderStatus = async (order) => {
-    console.log("order being payed");
-    try {
+    //if order status is Order Received, update to Order Accepted
+    if (order.status === "Order Received"){
+        try {
         const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/payment/${orderId.value}`, {
             method: 'PATCH',
             headers: {
@@ -42,6 +43,12 @@ const updateOrderStatus = async (order) => {
             body: JSON.stringify({
                 status: 'Order Accepted',
             }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+                console.log('Order placed successfully:', data);
+                console.log(data.data[0]._id);
+                window.location.href =`/confirmed/${data.data[0]._id}`;
         });
 
         if (!response.ok) {
@@ -51,8 +58,11 @@ const updateOrderStatus = async (order) => {
         const data = await response.json();
         console.log(data.data);
 
-    } catch (error) {
-        console.error('Error updating order status:', error.message);
+        } catch (error) {
+            console.error('Error updating order status:', error.message);
+        }
+    } else {
+        window.location.href =`/confirmed/${orderId.value}`;
     }
 };
 </script>
@@ -124,10 +134,10 @@ const updateOrderStatus = async (order) => {
 
 .order__payment__method {
     width: 30%;
-    height: 60px;
+    height: 40px;
     border-radius: 12px;
     background-color: #4769FF;
-    color: #FFF;
+    color: #000;
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
