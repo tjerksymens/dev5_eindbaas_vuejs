@@ -18,13 +18,13 @@ const captureSnapshot = () => {
 
     // Create a new renderer and set its size
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(400, 400);
+    renderer.setSize(1000, 1000);
     renderer.shadowMap.enabled = true;
 
     // Create a new scene and camera
     const snapshotScene = new THREE.Scene();
     snapshotScene.background = new THREE.Color(0xffffff);
-    const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+    const snapshotCamera = new THREE.PerspectiveCamera(75, 1000 / 1000, 0.1, 1000);
     snapshotScene.camera = snapshotCamera;
 
     snapshotCamera.position.set(0, 0.7, 1.5);
@@ -209,7 +209,7 @@ onMounted(() => {
             console.log(data.data[0]._id);
             window.location.href =`/confirm/${data.data[0]._id}`;
 
-            orderSocket(data.data[0]);
+            //orderSocket(data.data[0]);
         })
         .catch((error) => {
             console.error('Error placing order:', error);
@@ -229,12 +229,12 @@ onMounted(() => {
     function captureSnapshot() {
         const canvasContainer = document.getElementById('canvasContainer');
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(400, 400);
+        renderer.setSize(500, 500);
 
 
         const snapshotScene = new THREE.Scene();
         snapshotScene.background = new THREE.Color(0xffffff);
-        const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+        const snapshotCamera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
         renderer.render(snapshotScene, snapshotCamera);
         snapshotCamera.position.set(0, 0.7, 1.5);
         snapshotCamera.lookAt(0, 0.7, -0.5);
