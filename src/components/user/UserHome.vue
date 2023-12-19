@@ -12,7 +12,6 @@
     const titles = document.querySelectorAll('.home--user__title');
     titles.forEach((title) => {
         title.style.animationDelay = `${getRandomDelay()}s`;
-        console.log(title.style.animationDelay);
     });
     });
 </script>
