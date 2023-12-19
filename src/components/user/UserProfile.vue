@@ -123,7 +123,7 @@ onMounted(async () => {
             </div>
         </div>
         <div class="logout profile__logout">
-            <h2>Profile settings</h2>
+            <h2 class="logout__title">Profile settings</h2>
             <button @click="openPopup" class="logout__btn">Logout</button>
         </div>
     </main>
@@ -173,5 +173,26 @@ onMounted(async () => {
 
 .profile__logout h2 {
     margin: 0;
+}
+
+@media screen and (max-width: 1300px) {
+    .profile__logout {
+        align-items: baseline;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .profile--user {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    }
+
+    .order__list--user {
+        width: 140%;
+    }
+
+    .logout__title {
+        display: none;
+    }
 }
 </style>

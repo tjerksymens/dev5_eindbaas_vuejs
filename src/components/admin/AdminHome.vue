@@ -245,6 +245,29 @@
     }
 
     @media screen and (max-width: 800px) {
+    .order {
+        height: 300px;
+    }
+
+    .order__options {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .order__options select {
+        width: 40%;
+        display: inline-block;
+        margin: 0;
+    }
+
+    .order__options button {
+        width: 40%;
+        display: inline-block;
+        margin: 0;
+    }
     .profile__order--admin {
         display: block;
     }
