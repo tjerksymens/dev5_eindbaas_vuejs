@@ -1,24 +1,37 @@
 <script setup>
 import Logo from "../general/Logo.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
-//twee variabelen voor de naam van de user
-//deze worden geupdate naar de api value via de login
-let firstName = "Joe";
-let lastName = "Jackson";
+const route = useRoute();
+const orderId = ref(route.params.orderId);
+const order = ref(null);
 
-const orders = ref([
-    {
-        orderId: 5002,
-        shoeId: 1891,
-        adress: {
-            firstLine: "22 Carnaby St, Carnaby",
-            secondLine: "London W1F 7DB",
-            thirdLine: "United Kingdom"
-        },
-        snapshot: "https://cdn-images.farfetch-contents.com/14/61/25/03/14612503_23499899_600.jpg"
+onMounted(async () => {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch order details');
+        }
+
+        const data = await response.json();
+        order.value = data.data.shoe;
+
+        // Log order.value after setting its value
+        console.log(order.value);
+        
+    } catch (error) {
+        console.error('Error fetching order details:', error);
     }
-]);
+});
+
+
 </script>
 
 <template>
@@ -29,27 +42,29 @@ const orders = ref([
             <a href="/profile" class="button__header">Profile</a> 
         </nav>
     </header>
-    <main class="confirmed">
+    <main v-if="order" class="confirmed">
         <div class="main__content confirmed__content">
             <div class="order__head">
                 <h1 class="confirmed__title">Payment succesfull</h1>
                 <a class="order__close" href="/profile"></a>
             </div>
-            <div class="confirmed__order" v-for="order in orders" :key="order.orderId">
-                <div class="order__snapshot confirmed__order__snapshot" :style="{ backgroundImage: 'url(' + order.snapshot + ')' }"></div>
+            <div class="confirmed__order">
+                <div class="order__snapshot confirmed__order__snapshot"></div>
                 <div class="order__data confirmed__order__data">
-                    <h2 class="customer">Order for <span>{{ firstName }} {{ lastName }}</span> accepted</h2>
-                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order.orderId }}</p>
-                    <p class="order__shoe confirm__order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
+                    <h2 class="customer">Order for <span>{{ order.user.first_name }} {{ order.user.last_name }}</span> accepted</h2>
+                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order._id }}</p>
                     <div class="order__adress__box">
                         <p><span>Adress:</span><br><br><br></p>
-                        <p class="order__adress confirm__order__adress" >{{ order.adress.firstLine }} <br> {{ order.adress.secondLine }} <br> {{ order.adress.thirdLine }}</p>
+                        <p class="order__adress confirm__order__adress" >{{ order.user.adress }} <br> {{ order.user.city }} <br> {{ order.user.country }}</p>
                     </div>
-                    <p class="order__status order__status--accepted confirmed__order__status"><span>Status:</span> Order accepted✉️</p>
+                    <p class="order__status order__status--accepted confirmed__order__status"><span>Status:</span>{{ order.status }}</p>
                 </div>
             </div>
         </div>
     </main>
+    <div v-else>
+        <p>Payment is being processed...</p>
+    </div>
 </template>
 
 <style scoped>

@@ -154,7 +154,8 @@ function sendOrderToApi(configuration, shoeName, price, selectedSize) {
     .then((response) => response.json())
     .then((data) => {
         console.log('Order placed successfully:', data);
-        window.location.href = "/confirm";
+        console.log(data.data[0]._id);
+        window.location.href =`/confirm/${data.data[0]._id}`;
     })
     .catch((error) => {
         console.error('Error placing order:', error);
