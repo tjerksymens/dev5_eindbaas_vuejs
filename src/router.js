@@ -98,7 +98,8 @@ const routes = [
         },
     },
     {
-        path: '/confirm',
+        path: '/confirm/:orderId',
+        name: 'confirm',
         component: () => {
             if (isLoggedIn) {
                 return isAdmin ? router.push('/') : OrderPlaced;
@@ -108,7 +109,8 @@ const routes = [
         },
     },
     {
-        path: '/confirmed',
+        path: '/confirmed/:orderId',
+        name: 'confirmed',
         component: () => {
             if (isLoggedIn) {
                 return isAdmin ? router.push('/') : OrderConfirmed;

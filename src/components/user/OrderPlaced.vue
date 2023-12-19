@@ -1,34 +1,67 @@
 <script setup>
 import Logo from "../general/Logo.vue";
-import { ref } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
-//twee variabelen voor de naam van de user
-//deze worden geupdate naar de api value via de login
-let firstName = "Joe";
-let lastName = "Jackson";
+const route = useRoute();
+const orderId = ref(route.params.orderId);
+const order = ref(null);
 
-const orders = ref([
-    {
-        orderId: 5002,
-        shoeId: 1891,
-        adress: {
-            firstLine: "22 Carnaby St, Carnaby",
-            secondLine: "London W1F 7DB",
-            thirdLine: "United Kingdom"
-        },
-        snapshot: "https://cdn-images.farfetch-contents.com/14/61/25/03/14612503_23499899_600.jpg"
+onMounted(async () => {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch order details: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        order.value = data.data.shoe;
+
+        if (document.querySelector(".order__payment__method")) {
+            document.querySelector(".order__payment__method").addEventListener("click", () => {
+                updateOrderStatus(order.value);
+                console.log("Order status updated");
+            });
+        }
+
+        // Log order.value after setting its value
+        console.log(order.value);
+        
+    } catch (error) {
+        console.error('Error fetching order details:', error.message);
     }
-]);
+});
 
-//popup openen wanneer er op de close button wordt geklikt
-const openPopup = () => {
-    document.querySelector(".popup").classList.add("open__popup");
-}
+const updateOrderStatus = async (order) => {
+    try {
+        const response = await fetch(`https://dev5-eindbaas-nodejs-api.onrender.com/api/v1/shoes/${orderId.value}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({
+                status: 'Order Paid',
+            }),
+        });
 
-//popup sluiten wanneer er op de popup background wordt geklikt
-const closePopup = () => {
-    document.querySelector(".popup").classList.remove("open__popup");
-}
+        if (!response.ok) {
+            throw new Error(`Failed to update order status: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log(data.data);
+
+    } catch (error) {
+        console.error('Error updating order status:', error.message);
+    }
+};
 </script>
 
 <template>
@@ -38,35 +71,37 @@ const closePopup = () => {
             <a href="/profile" class="button__header">Profile</a>
         </nav>
     </header>
-    <main class="confirm">
+    <main v-if="order" class="confirm">
         <div class="main__content confirm__content">
             <div class="order__head">
                 <h1 class="confirm__title">We received your order</h1>
                 <a class="order__close" href="#" @click="openPopup"></a>
             </div>
-            <div class="confirm__order" v-for="order in orders" :key="order.orderId">
-                <div class="order__snapshot confirm__order__snapshot" :style="{ backgroundImage: 'url(' + order.snapshot + ')' }"></div>
+            <div class="confirm__order">
+                <div class="order__snapshot confirm__order__snapshot"></div>
                 <div class="order__data confirm__order__data">
-                    <h2 class="customer">Order for: <span>{{ firstName }} {{ lastName }}</span></h2>
-                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order.orderId }}</p>
-                    <p class="order__shoe confirm__order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
+                    <h2 class="customer">Order for: <span>{{ order.user.first_name }} {{ order.user.last_name }}</span></h2>
+                    <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order._id }}</p>
                     <div class="order__adress__box">
                         <p><span>Adress:</span><br><br><br></p>
-                        <p class="order__adress confirm__order__adress" >{{ order.adress.firstLine }} <br> {{ order.adress.secondLine }} <br> {{ order.adress.thirdLine }}</p>
+                        <p class="order__adress confirm__order__adress" >{{ order.user.adress }} <br> {{ order.user.city }} <br> {{ order.user.country }}</p>
                     </div>
-                    <p class="order__status order__status--setup confirm__order__status"><span>Status:</span> Order setup🚩</p>
+                    <p class="order__status"><span>Status:</span> {{ order.status }}</p>
                     <div class="order__payment">
                         <h2>Select your payment method</h2>
                         <div class="order__payment__options">
-                            <a class="order__payment__method" href="/confirmed">Paypal</a>
-                            <a class="order__payment__method" href="/confirmed">Apple Pay</a>
-                            <a class="order__payment__method" href="/confirmed">Bancontact</a>
+                            <a class="order__payment__method" href=#>Paypal</a>
+                            <a class="order__payment__method" href=#>Apple Pay</a>
+                            <a class="order__payment__method" href=#>Bancontact</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <div v-else>
+        <p>Placing order..</p>
+    </div>
     <div class="popup close__popup">
         <div class="popup__background" @click="closePopup"></div>
         <div class="popup__content">
