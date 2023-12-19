@@ -9,6 +9,8 @@ import { Configurator } from '../../classes/Configurator';
 import * as TWEEN from '@tweenjs/tween.js';
 import { onMounted } from "vue";
 
+let socketServer;
+
 const scene = new THREE.Scene();
 
 const captureSnapshot = () => {
@@ -16,13 +18,13 @@ const captureSnapshot = () => {
 
     // Create a new renderer and set its size
     const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(400, 400);
+    renderer.setSize(1000, 1000);
     renderer.shadowMap.enabled = true;
 
     // Create a new scene and camera
     const snapshotScene = new THREE.Scene();
     snapshotScene.background = new THREE.Color(0xffffff);
-    const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+    const snapshotCamera = new THREE.PerspectiveCamera(75, 1000 / 1000, 0.1, 1000);
     snapshotScene.camera = snapshotCamera;
 
     snapshotCamera.position.set(0, 0.7, 1.5);
@@ -56,6 +58,8 @@ const captureSnapshot = () => {
 };
 
 onMounted(() => {
+    socketServer = new WebSocket("wss://dev5-eindbaas-nodejs-api.onrender.com/primus");
+
     const draco = new DRACOLoader();
     draco.setDecoderConfig({ type: 'js' });
     draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
@@ -204,21 +208,33 @@ onMounted(() => {
             console.log('Order placed successfully:', data);
             console.log(data.data[0]._id);
             window.location.href =`/confirm/${data.data[0]._id}`;
+
+            //orderSocket(data.data[0]);
         })
         .catch((error) => {
             console.error('Error placing order:', error);
         });
     }
 
+    const orderSocket = (orderData) => {
+        console.log('orderSocket 🚚', orderData);
+        let data = {
+            action: 'order',
+            order: orderData,
+        };
+
+        socketServer.send(JSON.stringify(data));
+    };
+
     function captureSnapshot() {
         const canvasContainer = document.getElementById('canvasContainer');
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(400, 400);
+        renderer.setSize(500, 500);
 
 
         const snapshotScene = new THREE.Scene();
         snapshotScene.background = new THREE.Color(0xffffff);
-        const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
+        const snapshotCamera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
         renderer.render(snapshotScene, snapshotCamera);
         snapshotCamera.position.set(0, 0.7, 1.5);
         snapshotCamera.lookAt(0, 0.7, -0.5);
