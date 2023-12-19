@@ -538,7 +538,7 @@ p {
     align-items: center;
 }
 
-.order__box:hover {
+.order:hover {
     border: none;
     background-color: var(--Primary);
 }
