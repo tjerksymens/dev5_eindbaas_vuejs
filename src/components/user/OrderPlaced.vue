@@ -128,6 +128,7 @@ const updateOrderStatus = async (order) => {
     align-items: center;
     margin-top: 16px;
     margin-left: 20px;
+    margin-bottom: 16px;
 }
 
 .order__payment__method {
@@ -147,5 +148,12 @@ const updateOrderStatus = async (order) => {
 .order__payment__method:hover {
     background-color: #69FF47;
     color: #FFF;
+}
+
+@media screen and (max-width: 600px) {
+    .order__payment__options {
+        width: 100%;
+        margin-left: 0;
+    }
 }
 </style>
