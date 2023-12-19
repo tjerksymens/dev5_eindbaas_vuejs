@@ -1,5 +1,5 @@
 <script setup>
-    import Logo from "../general/Logo.vue";
+    import Logo from "./Logo.vue";
     import { ref, watchEffect, onMounted } from "vue";
 
     //twee variabelen voor de naam van de admin
@@ -9,7 +9,6 @@
     let lastName = "Admin";
 
     let socketServer;
-
 
     // Fetch user data
     onMounted(async () => {
@@ -67,17 +66,24 @@
             orders.value = data.data;
 
             socketServer.onmessage = (event) => {
+                console.log('socketServer 🚀', event);
                 const data = JSON.parse(event.data);
-                console.log(data);
-
-                const orderIndex = orders.value.findIndex(order => order._id === data.data._id);
-
-                if (orderIndex !== -1) {
-                    // If the order exists in the array, update it
-                    orders.value[orderIndex] = data.data;
-                } else {
-                    // If the order doesn't exist, add it to the array
-                    orders.value.push(data.data);
+                console.log('socketServer 🚀', data);
+                if (data.action === 'orderStatusSocket') {
+                    console.log('orderStatusSocket 🚚', data.order);
+                    const order = orders.value.find(order => order._id === data.order._id);
+                    if (order) {
+                        order.status = data.order.status;
+                    }
+                } else if (data.action === 'cancelSocket') {
+                    console.log('cancelSocket 🗑️', data.orderId);
+                    const orderIndex = orders.value.findIndex(order => order._id === data.orderId);
+                    if (orderIndex !== -1) {
+                        orders.value.splice(orderIndex, 1);
+                    }
+                } else if (data.acion === 'orderSocket') {
+                    console.log('orderSocket 📦', data.order);
+                    orders.value.push(data.order);
                 }
             };
 

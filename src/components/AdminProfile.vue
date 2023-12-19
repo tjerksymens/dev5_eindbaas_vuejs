@@ -1,5 +1,5 @@
 <script setup>
-import Logo from "../general/Logo.vue";
+import Logo from "./Logo.vue";
 import { ref, onMounted } from "vue";
 
 async function getUser() {
@@ -221,7 +221,7 @@ p span {
 }
 
 .admin__profile__fill {
-    background-image: url(../../assets/Admin-Profile.jpg);
+    background-image: url(../assets/Admin-Profile.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

@@ -1,6 +1,6 @@
 <script setup>
-import UserProfile from "../user/UserProfile.vue";
-import AdminProfile from "../admin/AdminProfile.vue";
+import UserOrder from "../components/UserOrder.vue";
+import AdminOrder from "../components/AdminOrder.vue";
 import { onMounted, ref } from "vue";
 
 const isAdmin = ref(false);
@@ -31,10 +31,10 @@ onMounted(checkAdmin);
 
 <template>
     <div v-if="isAdmin">
-        <AdminProfile />
+        <AdminOrder />
     </div>
     <div v-else>
-        <UserProfile />
+        <UserOrder />
     </div>
 </template>
 

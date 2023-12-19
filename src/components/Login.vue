@@ -1,5 +1,5 @@
 <script setup>
-import Logo from "../general/Logo.vue";
+import Logo from "./Logo.vue";
 import { ref } from "vue";
 
 const handleLogin = () => {

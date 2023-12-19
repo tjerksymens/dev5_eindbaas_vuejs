@@ -1,11 +1,11 @@
 <script setup>
-import Logo from "../general/Logo.vue";
+import Logo from "./Logo.vue";
 import * as THREE from 'three';
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Shoe } from '../../classes/Shoe';
-import { Configurator } from '../../classes/Configurator';
+import { Shoe } from '../classes/Shoe';
+import { Configurator } from '../classes/Configurator';
 import * as TWEEN from '@tweenjs/tween.js';
 import { onMounted } from "vue";
 
@@ -13,7 +13,7 @@ let socketServer;
 
 const scene = new THREE.Scene();
 
-const captureSnapshot = () => {
+let captureSnapshot = () => {
     const canvasContainer = document.getElementById('canvasContainer');
 
     // Create a new renderer and set its size
@@ -209,7 +209,7 @@ onMounted(() => {
             console.log(data.data[0]._id);
             window.location.href =`/confirm/${data.data[0]._id}`;
 
-            //orderSocket(data.data[0]);
+            orderSocket(data.data[0]);
         })
         .catch((error) => {
             console.error('Error placing order:', error);

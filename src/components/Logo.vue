@@ -12,7 +12,7 @@
 .logo {
     width: 218px;
     height: 30px;
-    background-image: url(../../assets/SwearLogoWhite.webp);
+    background-image: url(../assets/SwearLogoWhite.webp);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

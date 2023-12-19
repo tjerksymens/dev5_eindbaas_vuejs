@@ -1,5 +1,5 @@
 <script setup>
-    import Logo from "../general/Logo.vue";
+    import Logo from "./Logo.vue";
     import { onMounted } from "vue";
 
     // Function to generate random delay between -10s and 10s to apply to each title (each h1 with the animation)
@@ -37,7 +37,7 @@
 
 <style scoped>
     .home--user {
-        background-image: url("../../assets/Swear-Banner.jpg");
+        background-image: url("../assets/Swear-Banner.jpg");
         background-size: cover;
         background-position: center;
         overflow-x: hidden;

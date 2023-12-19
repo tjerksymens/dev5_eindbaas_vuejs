@@ -1,6 +1,6 @@
 <script setup>
-import UserHome from "../user/UserHome.vue";
-import AdminHome from "../admin/AdminHome.vue";
+import UserHome from "../components/UserHome.vue";
+import AdminHome from "../components/AdminHome.vue";
 import { onMounted, ref } from "vue";
 
 const isAdmin = ref(false);
