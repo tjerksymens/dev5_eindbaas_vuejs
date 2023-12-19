@@ -717,3 +717,23 @@ p {
     margin-left: -16px;
     margin-right: 32px;
 }
+
+/*LOGOUT*/
+.logout__btn {
+    width: 60%;
+    height: 40px;
+    padding: 8px 16px;
+    margin-top: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: var(--Primary);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.logout__btn:hover {
+    background-color: var(--Secondary);
+}

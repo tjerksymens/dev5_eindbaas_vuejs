@@ -77,6 +77,22 @@ onMounted(async () => {
             return b.status - a.status;
         });
     });
+
+    //Wanneer je wil uitloggen opent de popup
+    const openPopup = () => {
+        document.querySelector(".popup").classList.add("open__popup");
+    }
+
+    //popup sluiten wanneer er op de popup background wordt geklikt of op close
+    const closePopup = () => {
+        document.querySelector(".popup").classList.remove("open__popup");
+    }
+
+    //logout the user by destroying the token and redirecting to /login
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    }
 </script>
 
 <template>
@@ -105,20 +121,37 @@ onMounted(async () => {
                     </li>
                 </ul>
             </div>
-            <div class="profile__logout">
-
-            </div>
+        </div>
+        <div class="logout profile__logout">
+            <h2>Profile settings</h2>
+            <button @click="openPopup" class="logout__btn">Logout</button>
         </div>
     </main>
+    <div class="popup logout__popup">
+        <div class="popup__background" @click="closePopup"></div>
+        <div class="popup__content">
+            <h2 class="popup__title close__popup__title">Are you sure you want to logout?</h2>
+            <p class="popup__text close__popup__text">You will have to log back in</p>
+            <div class="popup__options close__popup__options">
+                <a class="popup__option btn btn--positive" href="#" @click="handleLogout">Yes</a>
+                <a class="popup__option btn btn--negative" href="#" @click="closePopup">No</a>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+.profile--user {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
 .profile__name--user {
     margin-top: 20px;
 }
 
 .profile__orders--user {
-    width: 60%;
+    width: 80%;
     margin-left: 6%;
     margin-top: 20px;
 }
@@ -129,5 +162,16 @@ onMounted(async () => {
 
 .profile__order__box {
     width: calc(100% - 40px);
+}
+
+.profile__logout {
+    height: calc(100% - 240px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile__logout h2 {
+    margin: 0;
 }
 </style>

@@ -71,6 +71,22 @@ const handleReset =() => {
         return document.querySelector(".form__error").innerHTML = "The new passwords do not match";
     }
 };
+
+    //Wanneer je wil uitloggen opent de popup
+    const openPopup = () => {
+        document.querySelector(".popup").classList.add("open__popup");
+    }
+
+    //popup sluiten wanneer er op de popup background wordt geklikt of op close
+    const closePopup = () => {
+        document.querySelector(".popup").classList.remove("open__popup");
+    }
+
+    //logout the user by destroying the token and redirecting to /login
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+    }
 </script>
 
 <template>
@@ -99,26 +115,32 @@ const handleReset =() => {
                         <p> Editor</p>
                     </div>
                 </div>
-                <div class="change__password ">
-                    <h2>Reset your password</h2>
-                    <div class="reset__form">
-                        <div class="form__divider form__divider__1">
-                            <div class="password__field form__field password__field--old">
-                                <label for="old-password">Current password: </label>
-                                <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                <div class="admin__profile__settings">
+                    <div class="change__password">
+                        <h2>Reset your password</h2>
+                        <div class="reset__form">
+                            <div class="form__divider form__divider__1">
+                                <div class="password__field form__field password__field--old">
+                                    <label for="old-password">Current password: </label>
+                                    <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                                </div>
+                                <div class="password__field form__field password__field--new">
+                                    <label for="new-password">New password: </label>
+                                    <input type="password" placeholder="Enter New Password" name="new-password" required>
+                                </div>
+                                <div class="confirm-password__field form__field password__field--confirm">
+                                    <label for="confirm-password">Confirm new password: </label>
+                                    <input type="password" placeholder="Confirm New Password" name="confirm password" required>
+                                </div>
                             </div>
-                            <div class="password__field form__field password__field--new">
-                                <label for="new-password">New password: </label>
-                                <input type="password" placeholder="Enter New Password" name="new-password" required>
-                            </div>
-                            <div class="confirm-password__field form__field password__field--confirm">
-                                <label for="confirm-password">Confirm new password: </label>
-                                <input type="password" placeholder="Confirm New Password" name="confirm password" required>
-                            </div>
+                            <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
                         </div>
-                        <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
+                        <p class="form__error"></p>
                     </div>
-                    <p class="form__error"></p>
+                    <div class="logout profile__logout">
+                        <h2>Profile settings</h2>
+                        <button @click="openPopup" class="logout__btn">Logout</button>
+                    </div>
                 </div>
             </div>
             <div v-else class="admin__profile__data">
@@ -136,29 +158,42 @@ const handleReset =() => {
                     </div>
                 </div>
                 <div class="change__password ">
-                    <h2>Reset your password</h2>
-                    <div class="reset__form">
-                        <div class="form__divider form__divider__1">
-                            <div class="password__field form__field password__field--old">
-                                <label for="old-password">Current password: </label>
-                                <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                    <div>
+                        <h2>Reset your password</h2>
+                        <div class="reset__form">
+                            <div class="form__divider form__divider__1">
+                                <div class="password__field form__field password__field--old">
+                                    <label for="old-password">Current password: </label>
+                                    <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                                </div>
+                                <div class="password__field form__field password__field--new">
+                                    <label for="new-password">New password: </label>
+                                    <input type="password" placeholder="Enter New Password" name="new-password" required>
+                                </div>
+                                <div class="confirm-password__field form__field password__field--confirm">
+                                    <label for="confirm-password">Confirm new password: </label>
+                                    <input type="password" placeholder="Confirm New Password" name="confirm password" required>
+                                </div>
                             </div>
-                            <div class="password__field form__field password__field--new">
-                                <label for="new-password">New password: </label>
-                                <input type="password" placeholder="Enter New Password" name="new-password" required>
-                            </div>
-                            <div class="confirm-password__field form__field password__field--confirm">
-                                <label for="confirm-password">Confirm new password: </label>
-                                <input type="password" placeholder="Confirm New Password" name="confirm password" required>
-                            </div>
+                            <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
                         </div>
-                        <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
+                        <p class="form__error"></p>
                     </div>
-                    <p class="form__error"></p>
                 </div>
             </div>
         </div>
     </main>
+    <div class="popup logout__popup">
+        <div class="popup__background" @click="closePopup"></div>
+        <div class="popup__content">
+            <h2 class="popup__title close__popup__title">Are you sure you want to logout?</h2>
+            <p class="popup__text close__popup__text">You will have to log back in</p>
+            <div class="popup__options close__popup__options">
+                <a class="popup__option btn btn--positive" href="#" @click="handleLogout">Yes</a>
+                <a class="popup__option btn btn--negative" href="#" @click="closePopup">No</a>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
@@ -220,13 +255,33 @@ p span {
     margin-right: 30px;
 }
 
-.change__password {
+.admin__profile__settings {
     height: calc(60vh - 122px);
     width: calc(100% - 32px);
     padding: 16px;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    justify-content: space-between;
+    background-color: lightgrey;
+}
+
+.change__password {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: lightgrey;
+}
+
+.profile__logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 2px solid #000;
+    text-align: center;
+}
+
+.logout__btn {
+    height: 60px;
+    margin-bottom: 24px;
 }
 </style>
