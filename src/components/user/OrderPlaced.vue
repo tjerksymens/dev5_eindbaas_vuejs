@@ -98,7 +98,7 @@ const updateOrderStatus = async (order) => {
             </div>
         </div>
     </main>
-    <div v-else>
+    <div class="loading__state" v-else>
         <p>Placing order..</p>
     </div>
     <div class="popup close__popup">

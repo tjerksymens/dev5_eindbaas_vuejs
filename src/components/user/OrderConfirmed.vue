@@ -66,7 +66,7 @@ onMounted(async () => {
             </div>
         </div>
     </main>
-    <div v-else>
+    <div class="loading__state" v-else>
         <p>Payment is being processed...</p>
     </div>
 </template>

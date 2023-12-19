@@ -768,3 +768,10 @@ p {
 .logout__btn:hover {
     background-color: var(--Primary);
 }
+
+/*LOADING*/
+.loading__state {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+}

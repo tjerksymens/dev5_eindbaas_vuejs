@@ -127,7 +127,7 @@ const cancelOrder = async (order) =>{
         </div>
     </main>
     </div>
-    <div v-else>
+    <div class="loading__state" v-else>
         <p>Loading..</p>
     </div>
 </template>
