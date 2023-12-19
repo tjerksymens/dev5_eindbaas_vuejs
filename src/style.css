@@ -656,7 +656,7 @@ p {
 }
 
 @media screen and (max-width: 800px) {
-    .order__close {
+    .order__close--confirm, .order__close--confirmed {
         position: relative;
         top: -30px;
         left: -10px;
@@ -668,7 +668,13 @@ p {
 }
 
 @media screen and (max-width: 664px) {
-    .order__close {
+    .order__close--confirm {
+        top: -56px;
+    }
+} 
+
+@media screen and (max-width: 605px) {
+    .order__close--confirmed {
         top: -56px;
     }
 } 
@@ -725,6 +731,7 @@ p {
     .confirm__title, .confirmed__title {
         margin-bottom: 74px;
         margin-right: 8px;
+        z-index: 5;
     }
 
     .confirm__order__data, .confirmed__order__data {

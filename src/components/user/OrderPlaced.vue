@@ -61,6 +61,16 @@ const updateOrderStatus = async (order) => {
         window.location.href =`/confirmed/${orderId.value}`;
     }
 };
+
+//Wanneer je weggaat van de pagina moet de user een melding krijgen dat hij zijn schoen niet heeft opgeslagen
+const openPopup = () => {
+    document.querySelector(".popup").classList.add("open__popup");
+}
+
+//popup sluiten wanneer er op de popup background wordt geklikt
+const closePopup = () => {
+    document.querySelector(".popup").classList.remove("open__popup");
+}
 </script>
 
 <template>
@@ -74,7 +84,7 @@ const updateOrderStatus = async (order) => {
         <div class="main__content confirm__content">
             <div class="order__head">
                 <h1 class="confirm__title">We received your order</h1>
-                <a class="order__close" href="#" @click="openPopup"></a>
+                <a class="order__close order__close--confirm" href="#" @click="openPopup"></a>
             </div>
             <div class="confirm__order">
                 <div class="order__snapshot confirm__order__snapshot">
@@ -124,7 +134,7 @@ const updateOrderStatus = async (order) => {
 .order__payment__options {
     width: calc(100% - 40px);
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin-top: 16px;
     margin-left: 20px;
@@ -134,15 +144,26 @@ const updateOrderStatus = async (order) => {
 .order__payment__method {
     width: 30%;
     height: 40px;
-    border-radius: 12px;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-left: 2px;
+    border-radius: 4px;
+    border: none;
     background-color: #4769FF;
-    color: #000;
-    font-size: 1.2rem;
-    font-weight: 700;
+    color: #FFF;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+.order__payment__method:hover {
+    background-color: #69ff47;
+    color: #FFF;
 }
 
 .order__payment__method:hover {

@@ -46,7 +46,7 @@ onMounted(async () => {
         <div class="main__content confirmed__content">
             <div class="order__head">
                 <h1 class="confirmed__title">Payment succesfull</h1>
-                <a class="order__close" href="/profile"></a>
+                <a class="order__close order__close--confirmed" href="/profile"></a>
             </div>
             <div class="confirmed__order">
                 <div class="order__snapshot confirmed__order__snapshot">
@@ -60,9 +60,9 @@ onMounted(async () => {
                         <p class="order__adress confirm__order__adress" >{{ order.user.adress }} <br> {{ order.user.city }} <br> {{ order.user.country }}</p>
                     </div>
                     <p class="order__status order__status--accepted confirmed__order__status"><span>Status: </span>{{ order.status }}</p>
-                    <div>
-                        <a class="form__btn" href="/">Home</a>
-                        <a class="form__btn" href="/profile">Profile</a>
+                    <div class="redirect__box">
+                        <a class="confirmed__btn" href="/">Home</a>
+                        <a class="confirmed__btn" href="/profile">Profile</a>
                     </div>
                 </div>
             </div>
@@ -74,5 +74,36 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.confirmed__btn {
+    width: 30%;
+    height: 40px;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-left: 2px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #4769FF;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
+.confirmed__btn:hover {
+    background-color: #69ff47;
+    color: #FFF;
+}
+
+.redirect__box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: space-around;
+}
 </style>
