@@ -243,4 +243,24 @@
         width: 20%;
         min-width: 132px;
     }
+
+    @media screen and (max-width: 800px) {
+    .profile__order--admin {
+        display: block;
+    }
+
+    .order__box--admin {
+        height: 60%;
+        width: calc(100% - 28px);
+    }
+
+    .order__options {
+        width: 100%;
+        margin-top: 16px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
 </style>
