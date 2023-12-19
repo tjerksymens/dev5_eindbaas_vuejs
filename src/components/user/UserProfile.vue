@@ -147,6 +147,7 @@ onMounted(async () => {
 .profile--user {
     display: grid;
     grid-template-columns: 5fr 1fr;
+    overflow-y: hidden;
 }
 
 .profile__name--user {
