@@ -42,8 +42,6 @@ const updateOrderStatus = async (order) => {
         })
         .then((response) => response.json())
         .then((data) => {
-                console.log('Order placed successfully:', data);
-                console.log(data.data._id);
                 window.location.href =`/confirmed/${order._id}`;
         });
 
@@ -52,7 +50,6 @@ const updateOrderStatus = async (order) => {
         }
 
         const data = await response.json();
-        console.log(data.data);
 
         } catch (error) {
             console.error('Error updating order status:', error.message);

@@ -22,9 +22,6 @@ onMounted(async () => {
 
         const data = await response.json();
         order.value = data.data.shoe;
-
-        // Log order.value after setting its value
-        console.log(order.value);
         
     } catch (error) {
         console.error('Error fetching order details:', error);
