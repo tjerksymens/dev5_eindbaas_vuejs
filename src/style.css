@@ -248,6 +248,10 @@ p {
     text-transform: uppercase;
 }
 
+.form__btn:hover {
+    background-color: var(--Primary);
+}
+
 .form__links {
     width: 100%;
     display: flex;
@@ -726,7 +730,7 @@ p {
     margin-top: 16px;
     border-radius: 4px;
     border: none;
-    background-color: var(--Primary);
+    background-color: var(--Secondary);
     color: var(--white);
     cursor: pointer;
     font-size: 24px;
@@ -735,5 +739,5 @@ p {
 }
 
 .logout__btn:hover {
-    background-color: var(--Secondary);
+    background-color: var(--Primary);
 }

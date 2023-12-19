@@ -157,27 +157,33 @@ const handleReset =() => {
                         <p> Editor</p>
                     </div>
                 </div>
-                <div class="change__password ">
-                    <div>
-                        <h2>Reset your password</h2>
-                        <div class="reset__form">
-                            <div class="form__divider form__divider__1">
-                                <div class="password__field form__field password__field--old">
-                                    <label for="old-password">Current password: </label>
-                                    <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                <div class="admin__profile__settings">
+                    <div class="change__password ">
+                        <div>
+                            <h2>Reset your password</h2>
+                            <div class="reset__form">
+                                <div class="form__divider form__divider__1">
+                                    <div class="password__field form__field password__field--old">
+                                        <label for="old-password">Current password: </label>
+                                        <input type="password" placeholder="Enter Old Password" name="old-password" required>
+                                    </div>
+                                    <div class="password__field form__field password__field--new">
+                                        <label for="new-password">New password: </label>
+                                        <input type="password" placeholder="Enter New Password" name="new-password" required>
+                                    </div>
+                                    <div class="confirm-password__field form__field password__field--confirm">
+                                        <label for="confirm-password">Confirm new password: </label>
+                                        <input type="password" placeholder="Confirm New Password" name="confirm password" required>
+                                    </div>
                                 </div>
-                                <div class="password__field form__field password__field--new">
-                                    <label for="new-password">New password: </label>
-                                    <input type="password" placeholder="Enter New Password" name="new-password" required>
-                                </div>
-                                <div class="confirm-password__field form__field password__field--confirm">
-                                    <label for="confirm-password">Confirm new password: </label>
-                                    <input type="password" placeholder="Confirm New Password" name="confirm password" required>
-                                </div>
+                                <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
                             </div>
-                            <button @click="handleReset" type="submit" class="form__btn form__btn__reset">Reset</button>
+                            <p class="form__error"></p>
                         </div>
-                        <p class="form__error"></p>
+                    </div>
+                    <div class="logout profile__logout">
+                        <h2>Profile settings</h2>
+                        <button @click="openPopup" class="logout__btn">Logout</button>
                     </div>
                 </div>
             </div>
