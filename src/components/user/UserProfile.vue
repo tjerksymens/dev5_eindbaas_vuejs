@@ -2,8 +2,6 @@
 import Logo from "../general/Logo.vue";
 import { ref, watchEffect, onMounted } from "vue";
 
-//Deze pagina is WIP en wordt afgemaakt als cors terug werkt
-
 // Fetch user data
 onMounted(async () => {
         try {
@@ -48,21 +46,20 @@ onMounted(async () => {
 
             if (!response.ok) {
                 throw new Error('Failed to fetch orders');
-            } //else return all orders where username = user.username
-            else {
-                const responseData = await response.json();
-                console.log(responseData.data);
-                const allOrders = responseData.data;
-                const userOrders = allOrders.filter(order => order.user.username === user.value.data.user.username);
-                console.log(userOrders);
-                orders.value = userOrders;
             }
+
+            const data = await response.json();
+            console.log(data.data);
+            orders.value = data.data;
+
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
     };
 
     onMounted(fetchOrdersByUser);
+    // Declare a reactive variable to store the orders
+    const orders = ref([]);
 
     // Create a computed property to return a sorted copy of the orders array
     //orders worden geordend op status value
@@ -91,13 +88,13 @@ onMounted(async () => {
             <div class="profile__orders--user">
                 <h2>Your Orders</h2>
                 <ul class="order__list order__list--user">
-                    <li class="order home__order home__order--user" v-for="order in orders.value" :key="order.orderId">
+                    <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
                         <a class="order__box" href="/order">
                             <div class="order__snapshot">Here comes the shoe snapshot</div>
                             <div class="order__data">
-                                <p class="order__id"><span>Order ID:</span> {{ order.orderId }}</p>
-                                <p class="order__shoe"><span>Shoe ID:</span> {{ order.shoeId }}</p>
-                                <p class="order__buyer"><span>Customer:</span> {{ firstName }} {{ lastName }}</p>
+                                <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
+                                <p class="order__shoe"><span>Shoe name:</span> {{ order.name }}</p>
+                                <p class="order__buyer"><span>Customer:</span> {{ order.user.first_name }} {{ order.user.last_name }}</p>
                                 <p><span>Order Status:</span> {{ order.status }}</p>
                             </div>
                         </a>

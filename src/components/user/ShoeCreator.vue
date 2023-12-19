@@ -101,7 +101,7 @@ orderBtn.addEventListener('click', () => {
     const currentConfiguration = getCurrentConfiguration();
     console.log(currentConfiguration);
 
-    const shoeName = 'Costum Shoe';
+    const shoeName = 'Custom Shoe';
     const price = parseFloat(document.getElementById('price').innerText.replace(',', '.'));
     const selectedSize = document.getElementById('size').value;
     
