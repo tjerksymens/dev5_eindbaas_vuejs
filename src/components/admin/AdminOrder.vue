@@ -116,11 +116,11 @@ const cancelOrder = async (order) =>{
                     <div class="order__options">
                             <select id="status__select" name="status select" v-model="order.status" @change="updateOrderStatus(order)">
                                 <option value="Order Received" class="status__select__option status__select--status0" :selected="order.status === 'Order Received'" >Order Received</option>
-                                <option value="Order accepted" class="status__select__option status__select--status1" :selected="order.status === 'Order accepted'" >Order accepted</option>
-                                <option value="In production" class="status__select__option status__select--status2" :selected="order.status === 'In production'" >In production</option>
-                                <option value="Preparing order" class="status__select__option status__select--status3" :selected="order.status === 'Preparing order'" >Preparing order</option>
-                                <option value="Order send" class="status__select__option status__select--status4" :selected="order.status === 'Order send'" >Order send</option>
-                                <option value="Order arrived" class="status__select__option status__select--status5" :selected="order.status === 'Order arrived'" >Order arrived</option>
+                                <option value="Order Accepted" class="status__select__option status__select--status1" :selected="order.status === 'Order Accepted'" >Order Accepted</option>
+                                <option value="In Production" class="status__select__option status__select--status2" :selected="order.status === 'In Production'" >In Production</option>
+                                <option value="Preparing Order" class="status__select__option status__select--status3" :selected="order.status === 'Preparing Order'" >Preparing Order</option>
+                                <option value="Order Send" class="status__select__option status__select--status4" :selected="order.status === 'Order Send'" >Order Send</option>
+                                <option value="Order Arrived" class="status__select__option status__select--status5" :selected="order.status === 'Order Arrived'" >Order Arrived</option>
                             </select>
                             <button @click="cancelOrder(order)">Cancel Order</button>
                         </div>
