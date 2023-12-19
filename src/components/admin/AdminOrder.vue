@@ -98,7 +98,9 @@ const cancelOrder = async (order) =>{
                 <a class="order__close" href="/"></a>
             </div>
             <div class="confirmed__order">
-                <div class="order__snapshot confirmed__order__snapshot"></div>
+                <div class="order__snapshot confirmed__order__snapshot">
+                    <img :src="order.snapshot" alt="Order Snapshot">
+                </div>
                 <div class="order__data confirmed__order__data">
                     <h2 class="customer">Order for <span> {{ order.user.first_name }} {{ order.user.last_name }}</span></h2>
                     <p class="order__id confirm__order__id"><span>Order ID:</span> {{ order._id }} </p>
