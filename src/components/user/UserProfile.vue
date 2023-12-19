@@ -110,7 +110,9 @@ onMounted(async () => {
                 <ul class="order__list order__list--user">
                     <li class="order home__order home__order--user" v-for="order in sortedOrders" :key="order.orderId">
                         <router-link :to="{ name: 'order', params: { orderId: order._id } }" class="order__box profile__order__box">
-                            <div class="order__snapshot">Here comes the shoe snapshot</div>
+                            <div class="order__snapshot">
+                            <img :src="order.snapshot" alt="Order Snapshot">
+                            </div>
                             <div class="order__data">
                                 <p class="order__id"><span>Order ID:</span> {{ order._id }}</p>
                                 <p class="order__shoe"><span>Shoe ID:</span> {{ order.name }}</p>
