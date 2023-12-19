@@ -42,16 +42,40 @@ const routes = [
   {
     path: '/create',
     component: () => import(`./components/user/ShoeCreator.vue`),
+    beforeEnter: (to, from, next) => {
+        // Check if the user is an admin, redirect if they are
+        if (isAdmin) {
+          next('/');
+        } else {
+          next();
+        }
+      },
   },
   {
     path: '/confirm/:orderId',
     name: 'confirm',
     component: () => import('./components/user/OrderPlaced.vue'),
+    beforeEnter: (to, from, next) => {
+        // Check if the user is an admin, redirect if they are
+        if (isAdmin) {
+          next('/');
+        } else {
+          next();
+        }
+      },
   },
   {
     path: '/confirmed/:orderId',
     name: 'confirmed',
     component: () => import('./components/user/OrderConfirmed.vue'),
+    beforeEnter: (to, from, next) => {
+        // Check if the user is an admin, redirect if they are
+        if (isAdmin) {
+          next('/');
+        } else {
+          next();
+        }
+      },
   },
 ];
 
