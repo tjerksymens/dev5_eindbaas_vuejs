@@ -57,7 +57,11 @@ onMounted(async () => {
                         <p><span>Adress:</span><br><br><br></p>
                         <p class="order__adress confirm__order__adress" >{{ order.user.adress }} <br> {{ order.user.city }} <br> {{ order.user.country }}</p>
                     </div>
-                    <p class="order__status order__status--accepted confirmed__order__status"><span>Status:</span>{{ order.status }}</p>
+                    <p class="order__status order__status--accepted confirmed__order__status"><span>Status: </span>{{ order.status }}</p>
+                    <div>
+                        <a class="form__btn" href="/">Home</a>
+                        <a class="form__btn" href="/profile">Profile</a>
+                    </div>
                 </div>
             </div>
         </div>

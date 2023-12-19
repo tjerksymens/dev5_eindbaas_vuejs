@@ -250,6 +250,7 @@ p {
 
 .form__btn:hover {
     background-color: var(--Primary);
+    color: var(--white);
 }
 
 .form__links {
