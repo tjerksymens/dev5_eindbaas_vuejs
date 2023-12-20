@@ -207,9 +207,8 @@ onMounted(() => {
         .then((data) => {
             console.log('Order placed successfully:', data);
             console.log(data.data[0]._id);
-            window.location.href =`/confirm/${data.data[0]._id}`;
-
             orderSocket(data.data[0]);
+            window.location.href =`/confirm/${data.data[0]._id}`;
         })
         .catch((error) => {
             console.error('Error placing order:', error);
@@ -229,12 +228,12 @@ onMounted(() => {
     function captureSnapshot() {
         const canvasContainer = document.getElementById('canvasContainer');
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(500, 500);
+        renderer.setSize(400, 400);
 
 
         const snapshotScene = new THREE.Scene();
         snapshotScene.background = new THREE.Color(0xffffff);
-        const snapshotCamera = new THREE.PerspectiveCamera(75, 500 / 500, 0.1, 1000);
+        const snapshotCamera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 1000);
         renderer.render(snapshotScene, snapshotCamera);
         snapshotCamera.position.set(0, 0.7, 1.5);
         snapshotCamera.lookAt(0, 0.7, -0.5);
