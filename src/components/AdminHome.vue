@@ -181,8 +181,6 @@
 
     socketServer.send(JSON.stringify(data));
 };
-
-
 </script>
 
 <template>
@@ -196,11 +194,7 @@
         <div class="main__content home__content--admin">
             <div class="home__orders--admin">
                 <div class="home__orders__head">
-                    <h2>Current Orders:  <span>{{ sortedOrders.length }}</span></h2> 
-                    <div class="home__searchbar">
-                        <input type="text" placeholder="Search..">
-                        <button type="submit">Search</button>
-                    </div>
+                    <h2>Current Orders:  <span>{{ sortedOrders.length }}</span></h2>
                 </div>
                 <ul class="order__list order__list--admin">
                     <li class="order profile__order profile__order--admin" v-for="order in sortedOrders" :key="order.orderId">
