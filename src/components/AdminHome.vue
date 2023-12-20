@@ -69,24 +69,29 @@
                 console.log('socketServer 🚀', event);
                 const data = JSON.parse(event.data);
                 console.log('socketServer 🚀', data);
+
+                // Log the orders array to inspect its structure
+                console.log('Orders array:', orders.value);
+
                 if (data.action === 'orderStatusSocket') {
                     console.log('orderStatusSocket 🚚', data.order);
                     const order = orders.value.find(order => order._id === data.order._id);
                     if (order) {
-                        order.status = data.order.status;
+                        // Use Vue.set or this.$set to ensure reactivity
+                        this.$set(order, 'status', data.order.status);
+                        console.log("wheeeee");
                     }
                 } else if (data.action === 'cancelSocket') {
-                    console.log('cancelSocket 🗑️', data.orderId);
+                    console.log('cancelSocket 🗑️', data._id);
                     const orderIndex = orders.value.findIndex(order => order._id === data.orderId);
                     if (orderIndex !== -1) {
                         orders.value.splice(orderIndex, 1);
                     }
-                } else if (data.acion === 'orderSocket') {
+                } else if (data.action === 'orderSocket') {
                     console.log('orderSocket 📦', data.order);
                     orders.value.push(data.order);
                 }
             };
-
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
@@ -104,7 +109,7 @@
     // Watch for changes in the original orders array and update the sortedOrders
     watchEffect(() => {
         sortedOrders.value = orders.value.slice().sort((a, b) => {
-            return b.status - a.status;
+            return b._id.localeCompare(a._id);
         });
     });
 
@@ -130,8 +135,7 @@
             }
 
             const data = await response.json();
-            console.log('Order placed successfully:', data);
-            console.log(data.data);
+            //console.log('Order placed successfully:', data);
             orderStatusSocket(data.data);
         } catch (error) {
             console.error('Error updating order status:', error);

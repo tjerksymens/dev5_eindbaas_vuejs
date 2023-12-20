@@ -25,10 +25,8 @@ const handleSignup = () => {
     if (enteredPassword === enteredConfirmPassword) {
         if (enteredUsername === "" || enteredPassword === "" || enteredConfirmPassword === "" || enteredFirstname === "" || enteredLastname === "" || enteredStreet === "" || enteredCity === "" || enteredCountry === "") {
             return document.querySelector(".form__error").innerHTML = "Please fill in all fields";
-        } else if (enteredPassword.length < 8) {
-            return document.querySelector(".form__error").innerHTML = "The password must be at least 8 characters long";
-        } else if (enteredUsername.length < 5) {
-            return document.querySelector(".form__error").innerHTML = "The username must be at least 5 characters long";
+        } else if (enteredPassword.length < 5) {
+            return document.querySelector(".form__error").innerHTML = "The password must be at least 5 characters long";
         } //if the firtsname isn't a string return error
         else if (!enteredFirstname.match(/^[a-zA-Z\s]+$/)) {
             return document.querySelector(".form__error").innerHTML = "Please enter a valid first name";
