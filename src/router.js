@@ -21,20 +21,6 @@ const requireAuth = (to, from, next) => {
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-<<<<<<< Updated upstream
-    { path: '/login', component: () => import('./components/general/Login.vue') },
-    { path: '/signup', component: () => import('./components/general/Signup.vue') },
-    {
-      path: '/',
-      name: 'home',
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/pages/Home.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-=======
     { path: '/login', component: Login },
     { path: '/signup', component: Signup },
     {
@@ -42,40 +28,10 @@ const router = createRouter({
       name: 'home',
       component: Home,
       beforeEnter: requireAuth,
->>>>>>> Stashed changes
     },
     {
       path: '/order/:orderId',
       name: 'order',
-<<<<<<< Updated upstream
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/pages/Order.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-    },
-    {
-      path: '/profile',
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/pages/Profile.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-    },
-    {
-      path: '/create',
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/user/ShoeCreator.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-=======
       component: Order,
       beforeEnter: requireAuth,
     },
@@ -88,39 +44,18 @@ const router = createRouter({
       path: '/create',
       component: ShoeCreator,
       beforeEnter: requireAuth,
->>>>>>> Stashed changes
     },
     {
       path: '/confirm/:orderId',
       name: 'confirm',
-<<<<<<< Updated upstream
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/user/OrderPlaced.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-=======
       component: OrderPlaced,
       beforeEnter: requireAuth,
->>>>>>> Stashed changes
     },
     {
       path: '/confirmed/:orderId',
       name: 'confirmed',
-<<<<<<< Updated upstream
-      component: () => {
-        if (isLoggedIn()) {
-          return import('./components/user/OrderConfirmed.vue');
-        } else {
-          return import('./components/general/Login.vue');
-        }
-      },
-=======
       component: OrderConfirmed,
       beforeEnter: requireAuth,
->>>>>>> Stashed changes
     },
   ],
 });
